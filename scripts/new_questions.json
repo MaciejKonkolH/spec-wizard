@@ -1,0 +1,83 @@
+{
+    "q16c_leverage_logic": {
+        "id": "q16c_leverage_logic",
+        "text": "Jak model powinien uwzględniać dźwignię finansową (Leverage) wybraną przez klientów?",
+        "description": "Wyniki historyczne są 1x (bez dźwigni). Dźwignia mnoży zysk, ale i ryzyko drawdownu.",
+        "type": "single_choice",
+        "options": [
+            {
+                "id": "avg_leverage_slider",
+                "label": "Średnia Dźwignia (Globalny Suwak)",
+                "description": "Użytkownik ustawia np. 3x i cały kapitał bota pracuje z takim mnożnikiem."
+            },
+            {
+                "id": "leveraged_tiers",
+                "label": "Profile Agresywności (Tiers)",
+                "description": "Dzielimy klientów na grupy: Konserwatywni (1x), Umiarkowani (3x), Agresywni (5x). Model wylicza ważoną średnią."
+            },
+            {
+                "id": "dynamic_leverage",
+                "label": "Dźwignia dynamiczna (Volatility Based)",
+                "description": "System sam dobiera lewar tak, aby utrzymać stały poziom ryzyka (np. 1% straty na transakcję)."
+            }
+        ],
+        "recommendation": {
+            "optionId": "avg_leverage_slider",
+            "reason": "Najprostszy i najczytelniejszy sposób na pokazanie 'co by było gdyby' w modelu finansowym."
+        }
+    },
+    "q20b_client_growth": {
+        "id": "q20b_client_growth",
+        "text": "W jakim tempie powinna rosnąć baza klientów?",
+        "description": "Pozwala oszacować tempo przyrostu AUM niezależnie od wyniku tradingu.",
+        "type": "single_choice",
+        "options": [
+            {
+                "id": "fixed_monthly",
+                "label": "Stała ilość nowych klientów (np. +10 os/mies)",
+                "description": "Model liniowy, prosty do przewidzenia."
+            },
+            {
+                "id": "viral_growth",
+                "label": "Wzrost wykładniczy (Viral Coefficient)",
+                "description": "Każdy klient poleca bota kolejnym. Szybka skala w późniejszym etapie."
+            },
+            {
+                "id": "marketing_driven",
+                "label": "Wzrost napędzany budżetem (Ad-Spend)",
+                "description": "Ilość klientów zależy bezpośrednio od kwoty wpompowanej w reklamę."
+            }
+        ],
+        "recommendation": {
+            "optionId": "marketing_driven",
+            "reason": "Dla profesjonalnego startu, wzrost oparty na budżecie marketingowym jest najbardziej mierzalny."
+        }
+    },
+    "q20c_capital_injection": {
+        "id": "q20c_capital_injection",
+        "text": "Jak często i w jakiej skali klienci będą dopłacać kapitał?",
+        "description": "Symulacja 'Retention Upsell' – zadowoleni klienci dorzucają środki.",
+        "type": "single_choice",
+        "options": [
+            {
+                "id": "no_injections",
+                "label": "Brak dopłat (Tylko reinvest zysku)",
+                "description": "Kapitał rośnie tylko dzięki tradingowi i nowym klientom."
+            },
+            {
+                "id": "periodic_injection",
+                "label": "Regularne dopłaty (np. co kwartał +20%)",
+                "description": "Symulujemy oszczędnościowe podejście klientów."
+            },
+            {
+                "id": "profit_driven_injection",
+                "label": "Dopłaty po udanych miesiącach",
+                "description": "Ludzie dopłacają więcej, gdy widzą zielone słupki na wykresie."
+            }
+        ],
+        "recommendation": {
+            "optionId": "periodic_injection",
+            "reason": "Tworzy bardziej stabilny i optymistyczny wykres wzrostu AUM."
+        }
+    }
+}

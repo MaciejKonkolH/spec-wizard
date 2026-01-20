@@ -1,0 +1,24 @@
+{
+  "projectInfo": {
+    "name": "Model Finansowy CryptoBot",
+    "description": "Specyfikacja dynamicznego modelu finansowego dla projektu CryptoBot.",
+    "version": "1.0",
+    "contextSummary": {
+      "vision": "Stworzenie interaktywnego symulatora (HTML/JS), który pozwoli na modelowanie przychodów (Success Fee), kosztów (Cloud/AI) oraz wzrostu kapitału (AUM) w czasie, uwzględniając specyfikę tradingu (High-Water Mark)."
+    }
+  },
+  "modules": [
+    {
+      "id": "financial_engine",
+      "name": "Silnik Finansowy",
+      "phases": [
+        "module_financial_engine/phase_1.json",
+        "module_financial_engine/phase_2.json",
+        "module_financial_engine/phase_3.json",
+        "module_financial_engine/phase_4.json",
+        "module_financial_engine/phase_5.json",
+        "module_financial_engine/phase_6.json"
+      ]
+    }
+  ]
+}

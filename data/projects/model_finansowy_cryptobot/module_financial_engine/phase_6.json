@@ -1,0 +1,31 @@
+{
+  "id": 6,
+  "name": "Finalizacja & Akceptacja PRD",
+  "status": "completed",
+  "contextSummary": "Użytkownik zatwierdził kompletność danych. Gotowość do generowania PRD.",
+  "questions": [
+    {
+      "id": "q_final_handover",
+      "text": "Czy zatwierdzasz zebrany materiał jako kompletny i gotowy do generowania PRD?",
+      "description": "Zatwierdzenie zamknie fazę zbierania wymagań i uruchomi proces syntezy dokumentu FINAL_PRD.md.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "yes",
+          "label": "TAK - Generuj PRD"
+        },
+        {
+          "id": "no",
+          "label": "NIE - Muszę jeszcze coś dodać"
+        }
+      ],
+      "userResponse": {
+        "selected": [
+          "yes"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    }
+  ]
+}

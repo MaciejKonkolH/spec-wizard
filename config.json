@@ -1,0 +1,8 @@
+{
+  "language": "pl",
+  "api_mode": true,
+  "api_provider": "gemini",
+  "api_model": "gemini-2.5-flash",
+  "api_key": "AIzaSyDxiuWr8uOUp_eSvlGj4INOvlmvlx4e7BU",
+  "active_project": "data/projects/model_finansowy_cryptobot/index.json"
+}

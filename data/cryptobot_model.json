@@ -1,0 +1,1103 @@
+{
+  "projectInfo": {
+    "name": "Model Finansowy CryptoBot",
+    "description": "Specyfikacja dynamicznego modelu finansowego dla projektu CryptoBot.",
+    "version": "1.0",
+    "contextSummary": {
+      "vision": "Stworzenie interaktywnego symulatora (HTML/JS), który pozwoli na modelowanie przychodów (Success Fee), kosztów (Cloud/AI) oraz wzrostu kapitału (AUM) w czasie, uwzględniając specyfikę tradingu (High-Water Mark)."
+    }
+  },
+  "modules": [
+    {
+      "id": "financial_engine",
+      "name": "Silnik Finansowy",
+      "phases": [
+        {
+          "id": 1,
+          "name": "Faza 1: Discovery (Badanie Koncepcji)",
+          "status": "completed",
+          "contextSummary": "Ustalono cel: WOW dla inwestora (ROI), horyzont 24 m-ce, szczegółowy model kosztów oraz konieczność symulacji drawdownów pod kątem High-Water Mark.",
+          "questions": [
+            {
+              "id": "q1_goal",
+              "text": "Jaki jest główny cel modelu finansowego?",
+              "description": "Zdefiniowanie celu pozwoli na dobór odpowiedniej precyzji i sposobu prezentacji danych.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "1",
+                  "label": "Pozyskanie inwestora (efekt WOW i symulacja ROI)",
+                  "description": "Model skupiony na dynamice wzrostu, wizualizacji skali i zwrocie z inwestycji (Return on Investment)."
+                },
+                {
+                  "id": "2",
+                  "label": "Zarządzanie operacyjne (kontrola kosztów i płynności)",
+                  "description": "Model precyzyjnie liczący wydatki bieżące, cashflow i momenty koniecznego dofinansowania."
+                },
+                {
+                  "id": "3",
+                  "label": "Optymalizacja strategii (jak parametry bota wpływają na zysk firmy)",
+                  "description": "Model techniczny pozwalający testować różne poziomy fee i ich wpływ na finalny wynik finansowy."
+                }
+              ],
+              "recommendation": {
+                "optionId": "1",
+                "reason": "Zgodnie z obecnym etapem projektu, kluczowe jest przekonanie inwestorów do skali biznesu."
+              },
+              "userResponse": {
+                "selected": [
+                  "1"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q2_horizon",
+              "text": "Jaki horyzont czasowy powinna obejmować standardowa symulacja?",
+              "description": "Okres czasu, dla którego będziemy generować wykresy i tabele finansowe.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "1",
+                  "label": "12 miesięcy (krótka perspektywa, wysoka dokładność)",
+                  "description": "Najwyższa przewidywalność, ale rzadko pokazuje efekt skali (compound interest)."
+                },
+                {
+                  "id": "2",
+                  "label": "24 miesiące (standard dla startupów)",
+                  "description": "Złoty środek między wizją a realistycznym planowaniem."
+                },
+                {
+                  "id": "3",
+                  "label": "60 miesięcy (długoterminowa wizja skalowania)",
+                  "description": "Czysto spekulatywna symulacja long-term, pokazuje potęgę wykładniczego wzrostu."
+                }
+              ],
+              "recommendation": {
+                "optionId": "2",
+                "reason": "Inwestorzy zazwyczaj chcą widzieć drogę do break-even i skalowania w perspektywie 2 lat."
+              },
+              "userResponse": {
+                "selected": [
+                  "2"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q3_complexity",
+              "text": "Jak bardzo szczegółowy ma być model kosztów?",
+              "description": "Decyduje o tym, czy koszty są jedną liczbą, czy rozbijamy je na czynniki pierwsze.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "1",
+                  "label": "Uproszczony (tylko główne grupy: Chmura, AI, Ludzie)",
+                  "description": "Szybki w konfiguracji, dobry do ogólnych założeń."
+                },
+                {
+                  "id": "2",
+                  "label": "Szczegółowy (podział na konkretne instancje GPU, licencje API, podatki, biuro)",
+                  "description": "Pozwala na bardzo precyzyjne planowanie budżetu operacyjnego."
+                },
+                {
+                  "id": "3",
+                  "label": "Dynamiczny (koszty rosnące liniowo wraz z liczbą klientów)",
+                  "description": "Koszty chmury i API rosną automatycznie wraz z wielkością bazy klientów."
+                }
+              ],
+              "recommendation": {
+                "optionId": "3",
+                "reason": "Model musi pokazywać, jak koszty skalują się wraz z sukcesem handlowym (AUM)."
+              },
+              "userResponse": {
+                "selected": [
+                  "2"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q4_hwm_sim",
+              "text": "Czy model powinien symulować negatywne scenariusze rynkowe (drawdowny) i ich wpływ na High-Water Mark?",
+              "description": "High-Water Mark (HWM) to najwyższy stan kapitału, powyżej którego pobieramy opłatę od zysku. Drawdown to spadek kapitału.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "1",
+                  "label": "Tak (model musi pokazać okresy braku przychodów)",
+                  "description": "Jeśli bot straci, firma nie zarabia fee dopóki nie odrobi straty ponad poprzedni szczyt (HWM)."
+                },
+                {
+                  "id": "2",
+                  "label": "Nie (zakładamy stały, optymistyczny wzrost)",
+                  "description": "Uproszczenie, które może zostać odebrane przez inwestora jako zbyt optymistyczne."
+                }
+              ],
+              "recommendation": {
+                "optionId": "1",
+                "reason": "To kluczowe dla wiarygodności przed inwestorem – pokazuje, że rozumiesz ryzyko tradingu."
+              },
+              "userResponse": {
+                "selected": [
+                  "1"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Faza 2: Wymagania Funkcjonalne & Panel Sterowania",
+          "status": "completed",
+          "contextSummary": "Wybrano kluczowe funkcje: suwaki, panel kosztów i scenariusze. Dashboard będzie wyświetlał komplet KPI (Zysk, AUM, BEP, HWM, CLV/CAC) w interwale miesięcznym z ręcznym sterowaniem drawdownem.",
+          "questions": [
+            {
+              "id": "q5_features",
+              "text": "Jakie interaktywne funkcje powinny znaleźć się w panelu symulacji?",
+              "description": "Funkcjonalności dashboardu, które pozwalają na głębszą analizę danych i interakcję z modelem.",
+              "type": "multi_choice",
+              "options": [
+                {
+                  "id": "sliders",
+                  "label": "Suwaki parametrów (zmiana 'w locie' yield'u, churnu, kosztów)",
+                  "description": "Umożliwiają natychmiastową zmianę kluczowych zmiennych i obserwację wyników na wykresach."
+                },
+                {
+                  "id": "scenarios",
+                  "label": "System scenariuszy (zapisywanie i porównywanie Bull/Bear/Base)",
+                  "description": "Pozwala porównać scenariusz optymistyczny (Bull), pesymistyczny (Bear) i bazowy side-by-side."
+                },
+                {
+                  "id": "pdf_export",
+                  "label": "Eksport podsumowania do PDF (gotowy raport dla inwestora)",
+                  "description": "Generuje profesjonalny dokument z aktualną symulacją, gotowy do wysłania e-mailem lub prezentacji."
+                },
+                {
+                  "id": "monte_carlo",
+                  "label": "Analiza probabilistyczna (zakresy prawdopodobieństwa zysku)",
+                  "description": "Metoda statystyczna (Monte Carlo) pokazująca setki możliwych ścieżek zysku i ryzyko drawdownu."
+                },
+                {
+                  "id": "cost_deepdive",
+                  "label": "Panel edycji kosztów (dodawanie/usuwanie konkretnych pozycji budżetowych)",
+                  "description": "Możliwość precyzyjnego wpisania pensji, kosztów najmu czy opłat za API zamiast ogólnych kwot."
+                }
+              ],
+              "recommendation": {
+                "optionId": "sliders",
+                "reason": "Interaktywność to największa przewaga nad Excelem, pozwala 'poczuć' dynamikę biznesu."
+              },
+              "userResponse": {
+                "selected": [
+                  "sliders",
+                  "cost_deepdive",
+                  "scenarios"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q6_kpis",
+              "text": "Które wskaźniki (KPI) powinny być najbardziej widoczne na dashboardzie?",
+              "description": "KPI (Key Performance Indicators) to kluczowe mierniki sukcesu, które inwestor chce widzieć jako pierwsze.",
+              "type": "multi_choice",
+              "options": [
+                {
+                  "id": "net_profit",
+                  "label": "Miesięczny Zysk Netto (po kosztach i podatkach)",
+                  "description": "Realna kwota, która zostaje w firmie 'na czysto' każdego miesiąca po opłaceniu wszystkiego."
+                },
+                {
+                  "id": "aum_growth",
+                  "label": "Dynamika wzrostu AUM (Assets Under Management)",
+                  "description": "Całkowita wartość kapitału zarządzanego. Od tego zależy nasze Success Fee."
+                },
+                {
+                  "id": "bep_time",
+                  "label": "Czas do osiągnięcia Break-Even Point",
+                  "description": "Moment (miesiąc), w którym skumulowane zyski pokrywają wszystkie nakłady inwestycyjne."
+                },
+                {
+                  "id": "clv_cac",
+                  "label": "Relacja CLV do CAC (opłacalność pozyskania klienta)",
+                  "description": "Ile zarobimy na kliencie (Lifetime Value) w stosunku do kosztu jego pozyskania (Acquisition Cost)."
+                },
+                {
+                  "id": "hwm_status",
+                  "label": "Aktualny stan HWM i rezerwa na Drawdown",
+                  "description": "Informacja o tym, ile bot musi 'odrobić' strat rynkowych przed pobraniem kolejnej prowizji."
+                }
+              ],
+              "recommendation": {
+                "optionId": "net_profit",
+                "reason": "Inwestorów najbardziej interesuje 'bottom line' oraz szybkość zwrotu (BEP)."
+              },
+              "userResponse": {
+                "selected": [
+                  "net_profit",
+                  "aum_growth",
+                  "bep_time",
+                  "hwm_status",
+                  "clv_cac"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q7_sampling",
+              "text": "Z jaką częstotliwością model powinien przeliczać kapitał i koszty?",
+              "description": "Określa 'gęstość' danych na wykresach. Więcej punktów to ładniejsze wykresy, ale większy szum informacyjny.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "monthly",
+                  "label": "Miesięcznie (najbardziej czytelne dla finansów)",
+                  "description": "Standard w raportowaniu biznesowym. Wygładza dobowe wahania giełdy."
+                },
+                {
+                  "id": "weekly",
+                  "label": "Tygodniowo (lepsze dla dynamiki HWM)",
+                  "description": "Pozwala szybciej reagować na trendy rynkowe w symulacji."
+                },
+                {
+                  "id": "daily_noisy",
+                  "label": "Dziennie z szumem (najbardziej realistyczne wizualnie wykresy)",
+                  "description": "Symuluje codzienne zmiany salda, co nadaje modelowi charakteru 'real-time trading'."
+                }
+              ],
+              "recommendation": {
+                "optionId": "monthly",
+                "reason": "Standardowe raporty finansowe są miesięczne, co ułatwia porównanie z innymi projektami."
+              },
+              "userResponse": {
+                "selected": [
+                  "monthly"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q8_market_data",
+              "text": "Skąd model powinien brać parametry zmienności rynkowej (do testów HWM)?",
+              "description": "Sposób, w jaki symulator generuje spadki i wzrosty kapitału.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "fixed_input",
+                  "label": "Ręczny suwak % drawdown (uproszczone)",
+                  "description": "Użytkownik sam decyduje, jak głęboki będzie spadek w danym scenariuszu."
+                },
+                {
+                  "id": "historical_presets",
+                  "label": "Presety historyczne (np. 'Scenariusz FTX 2022', 'Bull Run 2021')",
+                  "description": "Używamy realnych ruchów BTC/ETH z przeszłości, aby przetestować odporność strategii."
+                },
+                {
+                  "id": "random_gaussian",
+                  "label": "Generator losowy (szum Gaussa z zadanym odchyleniem)",
+                  "description": "Zaawansowana matematycznie symulacja nieprzewidywalności rynku."
+                }
+              ],
+              "recommendation": {
+                "optionId": "historical_presets",
+                "reason": "Presety historyczne mają dużą wagę narracyjną przed inwestorem ('Nasz model przeżyłby krach FTX')."
+              },
+              "userResponse": {
+                "selected": [
+                  "fixed_input"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Faza 3: Szczegóły Interfejsu (UX Deep Dive)",
+          "status": "completed",
+          "contextSummary": "Ustalono układ Split Sidebar z suwakami po lewej. Wykorzystane zostaną wszystkie typy wykresów (AUM Area, Monthly Bar, Waterfall) z auto-reobliczaniem w czasie rzeczywistym i nakładaniem scenariuszy na jeden wykres (Overlay).",
+          "questions": [
+            {
+              "id": "q9_layout",
+              "text": "Jaki układ interfejsu preferujesz dla dashboardu?",
+              "description": "Sposób rozmieszczenia paneli sterowania (suwaków) względem wyników (wykresów).",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "split_sidebar",
+                  "label": "Panel sterowania z lewej, wykresy z prawej (klasyczny SaaS)",
+                  "description": "Bardzo czytelne, pozwala na manipulowanie parametrami przy stałym podglądzie wykresów."
+                },
+                {
+                  "id": "top_controls",
+                  "label": "Parametry na górze (poziomo), wyniki pod spodem",
+                  "description": "Daje więcej miejsca na szerokie, panoramiczne wykresy wzrostu kapitału."
+                },
+                {
+                  "id": "tabs",
+                  "label": "Podział na zakładki (Konfiguracja / Symulacja / Raport)",
+                  "description": "Dobre dla bardzo rozbudowanych modeli kosztów, ale tracimy natychmiastowy feedback."
+                }
+              ],
+              "recommendation": {
+                "optionId": "split_sidebar",
+                "reason": "Przy interaktywnym modelu 'split screen' najlepiej oddaje dynamikę zmian."
+              },
+              "userResponse": {
+                "selected": [
+                  "split_sidebar"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q10_chart_types",
+              "text": "Ktöre typy wizualizacji są kluczowe dla Twojej prezentacji?",
+              "description": "Wybór sposobu prezentowania danych liczbowych na ekranie.",
+              "type": "multi_choice",
+              "options": [
+                {
+                  "id": "area_cumulative",
+                  "label": "Pole powierzchni (Cumulative Growth) dla AUM",
+                  "description": "Pokazuje narastający kapitał, idealnie wizualizuje 'potęgę procentu składanego'."
+                },
+                {
+                  "id": "bar_monthly",
+                  "label": "Słupki dla miesięcznych przychodów i kosztów",
+                  "description": "Pozwala łatwo porównać rentowność (płynność) w każdym miesiącu oddzielnie."
+                },
+                {
+                  "id": "waterfall",
+                  "label": "Wykres kaskadowy (Waterfall) dla marży",
+                  "description": "Pokazuje jak od przychodu brutto odejmowane są kolejne koszty, aż do zysku netto."
+                },
+                {
+                  "id": "status_cards",
+                  "label": "Duże karty numerów (Big Numbers) dla KPI",
+                  "description": "Wypunktowanie najważniejszych liczb (np. ROI, BEP) w górnej części ekranu."
+                }
+              ],
+              "recommendation": {
+                "optionId": "area_cumulative",
+                "reason": "Dla inwestora najważniejsza jest wizualizacja 'góry złota', czyli skumulowanego AUM."
+              },
+              "userResponse": {
+                "selected": [
+                  "area_cumulative",
+                  "bar_monthly",
+                  "waterfall",
+                  "status_cards"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q11_interaction_flow",
+              "text": "Jak model ma reagować na zmianę parametrów?",
+              "description": "Decyduje o poczuciu 'życia' aplikacji.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "realtime",
+                  "label": "Auto-reobliczanie w czasie rzeczywistym (Live Update)",
+                  "description": "Wykresy 'pływają' podczas przesuwania suwaków. Maksymalny efekt WOW."
+                },
+                {
+                  "id": "manual",
+                  "label": "Przycisk 'Przelicz symulację' (Manual Calc)",
+                  "description": "Wymagane, gdy obliczenia są bardzo złożone (np. ciężkie Monte Carlo)."
+                }
+              ],
+              "recommendation": {
+                "optionId": "realtime",
+                "reason": "W modelu JS/HTML przy 24 miesiącach realtime będzie działał błyskawicznie i zrobi wrażenie."
+              },
+              "userResponse": {
+                "selected": [
+                  "realtime"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q12_scenarios_viz",
+              "text": "Jak chcesz porównywać scenariusze (Bull/Bear/Base)?",
+              "description": "Sposób prezentacji różnic między założeniami rynkowymi.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "overlay",
+                  "label": "Nałożenie na jeden wykres (różne kolory linii)",
+                  "description": "Najlepsze do pokazania rozpiętości wyników i marginesu bezpieczeństwa."
+                },
+                {
+                  "id": "toggle",
+                  "label": "Przełącznik scenariusza (widzisz tylko jeden na raz)",
+                  "description": "Czytelniejsze, ale trudniej porównać konkretne różnice w zysku."
+                },
+                {
+                  "id": "summary_table",
+                  "label": "Tabela porównawcza parametrów końcowych",
+                  "description": "Suche zestawienie liczb na końcu strony (np. Zysk Bull: 1M, Zysk Bear: 0.2M)."
+                }
+              ],
+              "recommendation": {
+                "optionId": "overlay",
+                "reason": "Wykres liniowy z trzema ścieżkami (wachlarz) to standard w profesjonalnych modelach finansowych."
+              },
+              "userResponse": {
+                "selected": [
+                  "overlay"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Faza 4: Logika Biznesowa & Silnik Obliczeniowy",
+          "status": "completed",
+          "contextSummary": "Silnik będzie naliczał Success Fee miesięcznie, uwzględniając VAT oraz koszty egzekucji tradingowej.",
+          "questions": [
+            {
+              "id": "q13_fee_logic",
+              "text": "Z jaką częstotliwością model powinien naliczać Success Fee?",
+              "description": "Opłata od zysku (prowizja) jest odejmowana od kapitału użytkownika i staje się przychodem firmy.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "monthly",
+                  "label": "Miesięcznie",
+                  "description": "Stały dopływ gotówki do firmy, najczęściej spotykane w tradingu detalicznym."
+                },
+                {
+                  "id": "quarterly",
+                  "label": "Kwartalnie",
+                  "description": "Standard dla funduszy hedge, pozwala na większe wahania kapitału przed wypłatą."
+                },
+                {
+                  "id": "continuous",
+                  "label": "Ciągle (aproksymacja)",
+                  "description": "Dla uproszczenia modelu przychody są doliczane płynnie co miesiąc."
+                }
+              ],
+              "recommendation": {
+                "optionId": "monthly",
+                "reason": "Dla startupu płynność miesięczna jest kluczowa dla pokrycia kosztów stałych."
+              },
+              "userResponse": {
+                "selected": [
+                  "monthly"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q14_tax_logic",
+              "text": "Jak model powinien traktować podatki od zysku?",
+              "description": "Zysk brutto vs zysk netto po opodatkowaniu.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "flat_perc",
+                  "label": "Stały podatek % od zysku netto firmy",
+                  "description": "Uproszczone liczenie np. 19% CIT od dochodu."
+                },
+                {
+                  "id": "vat_inc",
+                  "label": "Uwzględnienie VAT w kosztach operacyjnych",
+                  "description": "Dla precyzyjnego liczenia cashflowu (jeśli model ma być bardzo dokładny)."
+                },
+                {
+                  "id": "gross_only",
+                  "label": "Pomiń podatki (tylko zysk brutto)",
+                  "description": "Dobre do szybkiej wizualizacji ROI przed opodatkowaniem."
+                }
+              ],
+              "recommendation": {
+                "optionId": "flat_perc",
+                "reason": "Pokazanie zysku netto (po CIT) znacznie zwiększa wiarygodność przed inwestorem."
+              },
+              "userResponse": {
+                "selected": [
+                  "vat_inc"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q15_precision",
+              "text": "Jaka powinna być precyzja obliczeń?",
+              "description": "Liczba miejsc po przecinku w obliczeniach wewnętrznych i wyświetlanych.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "integers",
+                  "label": "Liczby całkowite (np. $1,250)",
+                  "description": "Najbardziej czytelne w prezentacjach, grosze nie mają znaczenia przy dużej skali."
+                },
+                {
+                  "id": "standard",
+                  "label": "Dwa miejsca po przecinku ($1,250.45)",
+                  "description": "Standard finansowy."
+                },
+                {
+                  "id": "crypto",
+                  "label": "Wysoka precyzja (8 miejsc)",
+                  "description": "Wymagane tylko jeśli symulujemy pojedyncze transakcje na małych kwotach BTC."
+                }
+              ],
+              "recommendation": {
+                "optionId": "integers",
+                "reason": "W modelach wizualnych grosze psują czytelność wykresów i tabeli."
+              },
+              "userResponse": {
+                "selected": [
+                  "standard"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q16_currency",
+              "text": "Jaką walutę bazową powinien obsługiwać model?",
+              "description": "Wpływa na symbole widoczne na dashboardzie i ewentualne przeliczniki.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "usd",
+                  "label": "USD (Dolar amerykański)",
+                  "description": "Standard światowy dla krypto i inwestycji."
+                },
+                {
+                  "id": "pln",
+                  "label": "PLN (Złoty polski)",
+                  "description": "Dobre dla lokalnego planowania kosztów (biuro, ludzie)."
+                },
+                {
+                  "id": "eur",
+                  "label": "EUR (Euro)",
+                  "description": "Uniwersalne dla rynku europejskiego."
+                }
+              ],
+              "recommendation": {
+                "optionId": "usd",
+                "reason": "Większość giełd i inwestorów krypto operuje na parytetach do Dolara."
+              },
+              "userResponse": {
+                "selected": [
+                  "usd"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q16b_trading_costs",
+              "text": "Jak model powinien uwzględniać koszty handlowe (Egzekucja HFT)?",
+              "description": "W tradingu wysokiej częstotliwości prowizje giełdowe i slippage mogą zjeść większość zysku.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "bps_fixed",
+                  "label": "Stała stawka w punktach bazowych (bps)",
+                  "description": "Odejmujemy np. 5 bps od każdego obrotu jako średni koszt (Fee + Slippage)."
+                },
+                {
+                  "id": "exchange_tiers",
+                  "label": "Dynamiczne Tiers (zależne od wolumenu)",
+                  "description": "Model symuluje spadek prowizji giełdowych wraz ze wzrostem AUM i obrotu."
+                },
+                {
+                  "id": "net_yield_only",
+                  "label": "Uproszczone (Yield podawany już jako Netto)",
+                  "description": "Zakładamy, że yield na dashboardzie to już zysk 'na czysto'."
+                }
+              ],
+              "recommendation": {
+                "optionId": "exchange_tiers",
+                "reason": "W HFT skala obrotu zmienia rentowność – model powinien pokazywać to jako przewagę skali."
+              },
+              "userResponse": {
+                "selected": [],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Faza 5: Parametry Startowe & Skalowanie",
+          "status": "completed",
+          "contextSummary": "Zdefiniowano parametry startowe i mechanizmy skalowania, w tym limity pojemności strategii (Capacity Limit).",
+          "questions": [
+            {
+              "id": "q17_initial_aum",
+              "text": "Jaki jest zakładany początkowy kapitał pod zarządzaniem (Initial AUM)?",
+              "description": "Kwota, od której zaczyna się symulacja w miesiącu 0 (np. kapitał własny lub pierwsi klienci).",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "small",
+                  "label": "$100k - $500k (Model garażowy)",
+                  "description": "Testujemy model na małej skali, skupiającą się na rentowności bota."
+                },
+                {
+                  "id": "medium",
+                  "label": "$1M - $5M (Start z inwestorem)",
+                  "description": "Optymalny poziom dla pokazania realnego biznesu i pokrycia kosztów zespołu."
+                },
+                {
+                  "id": "large",
+                  "label": "$10M+ (Model korporacyjny)",
+                  "description": "Skalowanie na szeroką skalę z dużym budżetem marketingowym."
+                }
+              ],
+              "recommendation": {
+                "optionId": "medium",
+                "reason": "Przy $1M efekty Success Fee stają się wystarczające, by pokryć koszty AI i infrastruktury."
+              },
+              "userResponse": {
+                "selected": [
+                  "small"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q18_fee_rates",
+              "text": "Jakie poziomy prowizji chcesz przyjąć jako domyślne?",
+              "description": "Główne parametry przychodowe modelu.",
+              "type": "multi_choice",
+              "options": [
+                {
+                  "id": "performance_20",
+                  "label": "Success Fee: 20% (Standard rynkowy)",
+                  "description": "Najbardziej akceptowalna przez klientów opłata od wypracowanego zysku."
+                },
+                {
+                  "id": "management_2",
+                  "label": "Management Fee: 2% w skali roku",
+                  "description": "Stała opłata za zarządzanie kapitałem, pobierana niezależnie od zysku."
+                },
+                {
+                  "id": "performance_higher",
+                  "label": "Agresywne Success Fee (np. 30-40%)",
+                  "description": "Stosowane przy unikalnych algorytmach o bardzo wysokiej stopie zwrotu."
+                }
+              ],
+              "recommendation": {
+                "optionId": "performance_20",
+                "reason": "Zgodnie z modelem HWM, 20% success fee to solidny fundament finansowy."
+              },
+              "userResponse": {
+                "selected": [
+                  "performance_higher"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q19_churn_model",
+              "text": "Jak model powinien symulować odpływ kapitału (Churn Rate)?",
+              "description": "Procent kapitału, który co miesiąc jest wypłacany lub zabierany przez klientów odchodzących z platformy.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "low",
+                  "label": "Niski (1-2% miesięcznie)",
+                  "description": "Wysoka retencja, stabilny wzrost."
+                },
+                {
+                  "id": "medium",
+                  "label": "Umiarkowany (5% miesięcznie)",
+                  "description": "Uwzględniamy realizację zysków przez klientów."
+                },
+                {
+                  "id": "dynamic",
+                  "label": "Zależny od wyników bota (Drawdown Churn)",
+                  "description": "Zaawansowane: klienci odchodzą szybciej, gdy bot notuje straty."
+                }
+              ],
+              "recommendation": {
+                "optionId": "medium",
+                "reason": "Bezpieczne założenie uwzględniające, że ludzie wypłacają zyski na konsumpcję."
+              },
+              "userResponse": {
+                "selected": [
+                  "medium"
+                ],
+                "customText": "",
+                "comment": "Chce żeby ten parametr był łatwo modyfikowalny jakimś przesuwakiem lub tym podobnym"
+              }
+            },
+            {
+              "id": "q19b_capacity_cap",
+              "text": "Czy model powinien symulować spadek rentowności (Alpha Decay) przy wzroście AUM?",
+              "description": "W HFT płynność rynku jest ograniczona. Powyżej pewnej kwoty (np. $50M) strategia zaczyna mieć zbyt duży wpływ na rynek i jej zyskowność % spada.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "hard_cap",
+                  "label": "Hard Cap (Stały limit kapitału)",
+                  "description": "Model przestaje przyjmować nowe środki powyżej np. $20M."
+                },
+                {
+                  "id": "linear_decay",
+                  "label": "Liniowy spadek Yield wraz ze wzrostem AUM",
+                  "description": "Im więcej zarządzamy, tym mniejszy procent zysku wypracowujemy."
+                },
+                {
+                  "id": "infinite",
+                  "label": "Pomiń (Nieskończona płynność)",
+                  "description": "Zakładamy, że rynek jest tak głęboki, że nasza skala nigdy nie wpłynie na zysk."
+                }
+              ],
+              "recommendation": {
+                "optionId": "linear_decay",
+                "reason": "Realistyczne podejście buduje zaufanie zawodowych inwestorów."
+              },
+              "userResponse": {
+                "selected": [],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q20_cac_efficiency",
+              "text": "Jak definiujemy efektywność marketingu?",
+              "description": "Stosunek wydanych pieniędzy na reklamę do pozyskanego kapitału (AUM).",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "linear",
+                  "label": "Stały koszt pozyskania (np. $1 spend = $50 AUM)",
+                  "description": "Uproszczony model liniowego wzrostu."
+                },
+                {
+                  "id": "diminishing",
+                  "label": "Spadek efektywności przy dużych skalach",
+                  "description": "Realistyczne: z czasem pozyskanie kolejnego miliona USD jest droższe."
+                }
+              ],
+              "recommendation": {
+                "optionId": "linear",
+                "reason": "Na etapie MVP modelu liniowa zależność jest wystarczająca i łatwiejsza do zrozumienia dla inwestora."
+              },
+              "userResponse": {
+                "selected": [
+                  "linear"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "name": "Faza 6: Architektura Techniczna & Struktura Danych",
+          "status": "completed",
+          "contextSummary": "Wybrano nowoczesny stos technologiczny: React z Chart.js/Recharts, centralne zarządzanie stanem (Central Store) oraz obliczenia na głównym wątku. UI będzie wspierać suwaki zsynchronizowane z polami tekstowymi (Input Sync) oraz suwaki zakresowe (Dual Range).",
+          "questions": [
+            {
+              "id": "q21_tech_stack",
+              "text": "W jakiej technologii powinien zostać zbudowany silnik symulatora?",
+              "description": "Determinuje wydajność oraz łatwość osadzenia modelu na stronie internetowej.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "vanilla_js",
+                  "label": "Vanilla JavaScript (Lekkość i szybkość)",
+                  "description": "Brak zależności, maksymalna szybkość ładowania, idealny do prostych dashboardów."
+                },
+                {
+                  "id": "react_charts",
+                  "label": "React + Chart.js / Recharts (Standard nowoczesny)",
+                  "description": "Łatwa rozbudowa o zaawansowane komponenty UI i reaktywne wykresy."
+                },
+                {
+                  "id": "python_wasm",
+                  "label": "Python (PyScript/Pyodide) w przeglądarce",
+                  "description": "Pozwala użyć bibliotek typu Pandas/NumPy bezpośrednio w przeglądarce bez serwera."
+                }
+              ],
+              "recommendation": {
+                "optionId": "react_charts",
+                "reason": "Ekosystem Reacta oferuje najlepsze biblioteki do wizualizacji danych finansowych."
+              },
+              "userResponse": {
+                "selected": [
+                  "react_charts"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q22_data_flow",
+              "text": "Jak silnik powinien zarządzać stanem parametrów (suwaków)?",
+              "description": "Architektura przepływu danych przy zmianach użytkownika.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "central_store",
+                  "label": "Centralny stan (Redux/Context API)",
+                  "description": "Wszystkie parametry w jednym miejscu, zmiana jednego odświeża cały model."
+                },
+                {
+                  "id": "event_driven",
+                  "label": "Model sterowany zdarzeniami (Event-based)",
+                  "description": "Każdy suwak wysyła sygnał tylko do zainteresowanych części (np. tylko do osi kosztów)."
+                },
+                {
+                  "id": "local_storage",
+                  "label": "Auto-save w LocalStorage",
+                  "description": "Symulator zapamiętuje ustawienia suwaków nawet po odświeżeniu strony przez użytkownika."
+                }
+              ],
+              "recommendation": {
+                "optionId": "central_store",
+                "reason": "Dla modelu finansowego spójność wszystkich danych w jednym momencie jest krytyczna."
+              },
+              "userResponse": {
+                "selected": [
+                  "central_store"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q23_component_library",
+              "text": "Jakie komponenty UI będą potrzebne do obsługi suwaków?",
+              "description": "Wybór estetyki i funkcjonalności elementów sterujących.",
+              "type": "multi_choice",
+              "options": [
+                {
+                  "id": "dual_range",
+                  "label": "Suwaki z wyborem zakresu (Min/Max)",
+                  "description": "Pozwalają symulować niepewność (np. zysk między 5% a 15%)."
+                },
+                {
+                  "id": "input_sync",
+                  "label": "Suwaki sparowane z polem liczbowym",
+                  "description": "Można przesuwać suwak LUB wpisać dokładną wartość z klawiatury."
+                },
+                {
+                  "id": "presets_btns",
+                  "label": "Przyciski 'Szybkich Ustawień' (np. 'Reset do domyślnych')",
+                  "description": "Pozwala natychmiast wrócić do bezpiecznych założeń."
+                }
+              ],
+              "recommendation": {
+                "optionId": "input_sync",
+                "reason": "Precyzja ma znaczenie w finansach – użytkownik czasem chce wpisać dokładnie 20.5%."
+              },
+              "userResponse": {
+                "selected": [
+                  "input_sync",
+                  "dual_range"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q24_worker_calc",
+              "text": "Gdzie powinny odbywać się obliczenia symulacji?",
+              "description": "Wpływa na płynność (framerate) interfejsu przy dużej ilości punktów danych.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "main_thread",
+                  "label": "Główny wątek (proste i szybkie)",
+                  "description": "Wystarczające dla 24-miesięcznych modeli, bardzo łatwe w implementacji."
+                },
+                {
+                  "id": "web_worker",
+                  "label": "Web Worker (obliczenia w tle)",
+                  "description": "Niezbędne przy symulacjach Monte Carlo, aby nie zamrażać animacji wykresów."
+                }
+              ],
+              "recommendation": {
+                "optionId": "main_thread",
+                "reason": "Dla obecnej skali danych JavaScript na głównym wątku poradzi sobie bez opóźnień."
+              },
+              "userResponse": {
+                "selected": [
+                  "main_thread"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "Faza 7: Integracje, Eksport & Finalizacja",
+          "status": "active",
+          "contextSummary": "Określamy sposób agregacji wyników HFT, raportowanie oraz eksport dokumentacji AI-Ready.",
+          "questions": [
+            {
+              "id": "q25_persistence",
+              "text": "Gdzie powinny być zapisywane wyniki symulacji?",
+              "description": "Decyduje o tym, czy użytkownik może wrócić do swojej sesji później.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "browser_only",
+                  "label": "Tylko przeglądarka (LocalStorage)",
+                  "description": "Brak serwera, dane zostają na komputerze użytkownika. Prywatność 100%."
+                },
+                {
+                  "id": "cloud_db",
+                  "label": "Baza danych w chmurze (Firebase/Supabase)",
+                  "description": "Pozwala na logowanie i dostęp do swoich symulacji z dowolnego urządzenia."
+                },
+                {
+                  "id": "sharelink",
+                  "label": "Unikalny link (Serializacja do URL)",
+                  "description": "Cały stan symulacji jest zakodowany w linku, który można wysłać mailem bez logowania."
+                }
+              ],
+              "recommendation": {
+                "optionId": "sharelink",
+                "reason": "Dla modelu prezentacyjnego, możliwość wysłania gotowego scenariusza linkiem to potężne narzędzie."
+              },
+              "userResponse": {
+                "selected": [
+                  "sharelink"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q26_reporting_quality",
+              "text": "Jaki poziom szczegółowości powinien mieć raport PDF?",
+              "description": "Eksport danych do formatu dokumentu.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "one_pager",
+                  "label": "Podsumowanie (One-Pager)",
+                  "description": "Jedna strona z najważniejszymi KPI i głównym wykresem wzrostu AUM."
+                },
+                {
+                  "id": "full_audit",
+                  "label": "Pełny audyt (kilka stron)",
+                  "description": "Rozbicie na czynniki pierwsze: koszty kadr, infrastruktury, symulacja HWM miesiąc po miesiącu."
+                },
+                {
+                  "id": "spreadsheet",
+                  "label": "Eksport do Excel (CSV/XLSX)",
+                  "description": "Dla analityków, którzy chcą sprawdzić Twoje formuły w swoim arkuszu."
+                }
+              ],
+              "recommendation": {
+                "optionId": "one_pager",
+                "reason": "Inwestorzy cenią konkret. One-pager z kluczowymi liczbami to najlepszy wstęp do rozmowy."
+              },
+              "userResponse": {
+                "selected": [
+                  "full_audit"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "q27_hft_aggregation",
+              "text": "Jak model powinien prezentować dane z tysięcy transakcji HFT?",
+              "description": "Finansowy model nie może śledzić każdej sekundy, musi agregować dane w sposób wiarygodny dla rocznego planowania.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "stochastic_monthly",
+                  "label": "Agregacja statystyczna (Monthly Distribution)",
+                  "description": "Modelujemy średni zysk dzienny i jego odchylenie, agregując do wyniku miesięcznego."
+                },
+                {
+                  "id": "representative_day",
+                  "label": "Symulacja 'Dnia Referencyjnego'",
+                  "description": "Pokazujemy szczegółowy przebieg zysku z jednego dnia, resztę roku ekstrapolujemy."
+                },
+                {
+                  "id": "pure_yield_input",
+                  "label": "Czysty yield miesięczny (Uproszczony)",
+                  "description": "Ignorujemy mikro-transakcje, skupiamy się na finalnym procencie zwrotu."
+                }
+              ],
+              "recommendation": {
+                "optionId": "stochastic_monthly",
+                "reason": "Najlepiej oddaje ryzyko drawdownu przy dużej liczbie transakcji."
+              },
+              "userResponse": {
+                "selected": [],
+                "customText": "",
+                "comment": "Zmieniono pytanie na adekwatne do HFT zgodnie z feedbackiem."
+              }
+            },
+            {
+              "id": "q28_spec_delivery",
+              "text": "W jakiej formie ma zostać wygenerowana finalna specyfikacja techniczna?",
+              "description": "Zwieńczenie pracy ze Spec Wizardem.",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "markdown_ai",
+                  "label": "Markdown Strukturany (zoptymalizowany pod AI)",
+                  "description": "Plik .md z wyraźną hierarchią i tabelami dla agentów kochających kod."
+                },
+                {
+                  "id": "yaml_spec",
+                  "label": "Struktura YAML / JSON",
+                  "description": "Czyste dane techniczne."
+                },
+                {
+                  "id": "combined_prd",
+                  "label": "Pełny PRD (Markdown + Diagramy Mermaid)",
+                  "description": "Kompletna specyfikacja z wizualizacją logiki."
+                }
+              ],
+              "recommendation": {
+                "optionId": "pr_template",
+                "reason": "Profesjonalny PRD to fundament pod budowę aplikacji i wycenę prac IT."
+              },
+              "userResponse": {
+                "selected": [
+                  "pr_template"
+                ],
+                "customText": "",
+                "comment": "PRD w formie pliku md, yaml lub tym podobnego łatwego do odczytu przez agentów AI"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

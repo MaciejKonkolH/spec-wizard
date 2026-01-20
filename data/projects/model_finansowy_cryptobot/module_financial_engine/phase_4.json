@@ -1,0 +1,214 @@
+{
+  "id": 4,
+  "name": "Faza 4: Scenariusze Inwestorskie & Analiza Ryzyka",
+  "status": "completed",
+  "contextSummary": "Zdefiniowano scenariusze inwestorskie i wskaźniki ryzyka.",
+  "questions": [
+    {
+      "id": "q29_sim_locking",
+      "text": "Jak system powinien zarządzać \"losowości\" wygenerowanego scenariusza?",
+      "description": "Ustaliliśmy, że wynik ma by? sta?y, ale musi istnie? sposób na zmianę symulacji.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "snapshot",
+          "label": "Snapshot (Przycisk: Regeneruj)",
+          "description": "Model generuje wynik raz i zapisuje go w stanie aplikacji. Zmienia się tylko po kliknięciu przycisku."
+        },
+        {
+          "id": "url_seed",
+          "label": "URL Seed (Zakodowane w linku)",
+          "description": "Każdy link ShareLink zawiera w sobie ziarno (seed). Ten sam link = zawsze ten sam wykres."
+        },
+        {
+          "id": "monthly_fixed",
+          "label": "Model Sztywny (Manual Edit)",
+          "description": "Dajemy użytkownikowi tabelę 12-24 miesięcy, gdzie może ręcznie skorygować wynik każdego miesiąca."
+        }
+      ],
+      "recommendation": {
+        "optionId": "url_seed",
+        "reason": "Najlepsze do współpracy: wysy?asz link inwestorowi i masz pewność, że widzi on dok?adnie to samo co Ty."
+      },
+      "userResponse": {
+        "selected": [
+          "url_seed"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q30_data_extrapolation",
+      "text": "Jak najlepiej wykorzystać Twoje 5 miesięcy realnych danych w modelu?",
+      "description": "Mamy 4 miesi?ce zysku i 1 miesi?c straty (drawdown).",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "block_loop",
+          "label": "P?tla Blokowa (Loop)",
+          "description": "Powtarzamy sekwencję [M1, M2, M3, M4, M5-zły] wielokrotnie. Bardzo bezpieczne i przewidywalne."
+        },
+        {
+          "id": "markov_chain",
+          "label": "Łańcuch Markowa (Prawdopodobieństwo)",
+          "description": "Model wylicza szansą wyst?pienia \"złego miesiąca\" (20%) i losuje go z tak? częstotliwością w skali roku."
+        },
+        {
+          "id": "hybrid_profile",
+          "label": "Profil Statystyczny + Outliers",
+          "description": "U?redniamy zysk, ale nakładamy \"maski\" ryzyka  np. raz na rok symulujemy spadek o 2x większy niż w danych historycznych."
+        }
+      ],
+      "recommendation": {
+        "optionId": "block_loop",
+        "reason": "Dla inwestora argument \"to są zap?tlone realne dane\" jest nie do podwa?enia statystycznie na ma?ej pr?bie."
+      },
+      "userResponse": {
+        "selected": [
+          "block_loop"
+        ],
+        "customText": "Uważam powinno być losowanie miesiąca. A nie zawsze po kolei M1, M2 .... Czyli będziemy mieli bazowe wyniki dla 5 miesięcy i dla raportu 24 będziemy losować (ziarno, seed) 24 razy. Dzięki temu dane będą bardziej zróżnicowane. Inaczej będziemy mieli powtarzający się pięciomiesięczny schemat",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q31_kpi_set",
+      "text": "Jakie zaawansowane wskaźniki (KPI) model powinien wyliczać automatycznie?",
+      "description": "Sam zysk to za mało dla profesjonalnego funduszu.",
+      "type": "multi_choice",
+      "options": [
+        {
+          "id": "sharpe",
+          "label": "Sharpe / Sortino Ratio",
+          "description": "Stosunek zysku do ryzyka (zmienności)."
+        },
+        {
+          "id": "max_dd",
+          "label": "Max Drawdown & Recovery Time",
+          "description": "Ile najwięcej straciliśmy i jak długo system \"odrabiał\" strat? do nowego szczytu (HWM)."
+        },
+        {
+          "id": "daily_vol",
+          "label": "Daily Volatility (Aproksymacja)",
+          "description": "Szacowana dzienna zmienno?? kapita?u."
+        }
+      ],
+      "recommendation": {
+        "optionId": "max_dd",
+        "reason": "Max Drawdown to kluczowa metryka psychologiczna dla każdego inwestora krypto."
+      },
+      "userResponse": {
+        "selected": [
+          "max_dd",
+          "sharpe",
+          "daily_vol"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q32_stress_testing",
+      "text": "Czy model powinien posiadać funkcję \"Stress Test\" (Czarny Łabędź)?",
+      "description": "Symulacja ekstremalnych warunków rynkowych.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "no_stress",
+          "label": "Nie, trzymamy się danych historycznych",
+          "description": "Model jest konserwatywny, nie chcemy straszyć inwestora."
+        },
+        {
+          "id": "manual_crash",
+          "label": "Manualny \"Market Crash\" (-30%)",
+          "description": "U?ytkownik klika przycisk i patrzy, jak system reaguje na nagże za?amanie rynku krypto."
+        },
+        {
+          "id": "worst_case_row",
+          "label": "Wiersz Scenariusza Pesymistycznego",
+          "description": "Obok wykresu głównego wyświetlamy alternatywną, czerwoną liniż \"Najgorszy możliwy rok\"."
+        }
+      ],
+      "recommendation": {
+        "optionId": "worst_case_row",
+        "reason": "Pokazanie, że my?lisz o ryzyku i masz na nie plan, potężnie buduje zaufanie."
+      },
+      "userResponse": {
+        "selected": [
+          "worst_case_row"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q33_architecture_type",
+      "text": "Jaki model architektury backendowej najlepiej pasuje do symulacji?",
+      "description": "Deterministyczne generowanie danych wymaga stabilnej logiki po stronie serwera lub silnika JS.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "client_side",
+          "label": "Pure Client-Side (JS)",
+          "description": "Cała logika obliczeń w przeglądarce. Szybkość i prywatność, ale trudniej o skomplikowane audyty."
+        },
+        {
+          "id": "server_api",
+          "label": "Server-Side API (Python/Node)",
+          "description": "Obliczenia na serwerze. Łatwiejsza walidacja formuł i generowanie PDF, ale wymaga aktywnego backendu."
+        },
+        {
+          "id": "hybrid_wasm",
+          "label": "Hybrid (WebAssembly)",
+          "description": "Ekstremalna wydajność obliczeniowa w przeglądarce. Dobre, jeśli planujemy symulować tysiące scenariuszy Monte Carlo."
+        }
+      ],
+      "recommendation": {
+        "optionId": "client_side",
+        "reason": "Dla lekkiego narzędzia prezentacyjnego, logika Client-Side jest najtańsza w utrzymaniu i najszybsza dla użytkownika."
+      },
+      "userResponse": {
+        "selected": [
+          "client_side"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q34_data_format",
+      "text": "W jakim formacie system powinien przechowywać Twoje dane historyczne (te 5 miesięcy)?",
+      "description": "Dane muszą być wczytywane błyskawicznie przy starcie symulacji.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "json_static",
+          "label": "Statyczny JSON (Embedded)",
+          "description": "Dane zaszyte bezpośrednio w kodzie frontendu. Zero opóźnień."
+        },
+        {
+          "id": "csv_dynamic",
+          "label": "Dynamiczne pliki CSV",
+          "description": "Model czyta pliki z folderu /data. Łatwo podmienić dane na nowsze bez przebudowy aplikacji."
+        },
+        {
+          "id": "db_query",
+          "label": "Baza Danych (SQLite/NoSQL)",
+          "description": "Wymagane tylko jeśli planujemy tysiące zestawów danych dla różnych użytkowników."
+        }
+      ],
+      "recommendation": {
+        "optionId": "json_static",
+        "reason": "Dla obecnej skali (5 miesięcy, 100 symboli) JSON jest najbardziej wydajnym i najprostszym formatem."
+      },
+      "userResponse": {
+        "selected": [
+          "json_static"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    }
+  ]
+}

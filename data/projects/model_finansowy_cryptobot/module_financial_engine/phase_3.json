@@ -1,0 +1,657 @@
+{
+  "id": 3,
+  "name": "Faza 3: Logika Biznesowa, Dynamika Wzrostu & Dźwignia",
+  "status": "completed",
+  "contextSummary": "Ustalono logikę biznesową, system poleceń i parametry wzrostu.",
+  "questions": [
+    {
+      "id": "q13_fee_logic",
+      "text": "Z jaką częstotliwością model powinien naliczać Success Fee?",
+      "description": "Opłata od zysku (prowizja) jest odejmowana od kapitału użytkownika i staje się przychodem firmy.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "monthly",
+          "label": "Miesięcznie",
+          "description": "Stały dopływ gotówki do firmy, najczęściej spotykane w tradingu detalicznym."
+        },
+        {
+          "id": "quarterly",
+          "label": "Kwartalnie",
+          "description": "Standard dla funduszy hedge, pozwala na większe wahania kapitału przed wypłatą."
+        },
+        {
+          "id": "continuous",
+          "label": "Ciągle (aproksymacja)",
+          "description": "Dla uproszczenia modelu przychody są doliczane płynnie co miesiąc."
+        }
+      ],
+      "recommendation": {
+        "optionId": "monthly",
+        "reason": "Dla startupu płynność miesięczna jest kluczowa dla pokrycia kosztów stałych."
+      },
+      "userResponse": {
+        "selected": [
+          "monthly"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q14_tax_logic",
+      "text": "Jak model powinien traktować podatki od zysku?",
+      "description": "Zysk brutto vs zysk netto po opodatkowaniu.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "flat_perc",
+          "label": "Stały podatek % od zysku netto firmy",
+          "description": "Uproszczone liczenie np. 19% CIT od dochodu."
+        },
+        {
+          "id": "vat_inc",
+          "label": "Uwzględnienie VAT w kosztach operacyjnych",
+          "description": "Dla precyzyjnego liczenia cashflowu (jeśli model ma być bardzo dokładny)."
+        },
+        {
+          "id": "gross_only",
+          "label": "Pomiń podatki (tylko zysk brutto)",
+          "description": "Dobre do szybkiej wizualizacji ROI przed opodatkowaniem."
+        }
+      ],
+      "recommendation": {
+        "optionId": "flat_perc",
+        "reason": "Pokazanie zysku netto (po CIT) znacznie zwiększa wiarygodność przed inwestorem."
+      },
+      "userResponse": {
+        "selected": [
+          "vat_inc"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q15_precision",
+      "text": "Jaka powinna być precyzja obliczeń?",
+      "description": "Liczba miejsc po przecinku w obliczeniach wewnętrznych i wyświetlanych.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "integers",
+          "label": "Liczby całkowite (np. $1,250)",
+          "description": "Najbardziej czytelne w prezentacjach, grosze nie mają znaczenia przy dużej skali."
+        },
+        {
+          "id": "standard",
+          "label": "Dwa miejsca po przecinku ($1,250.45)",
+          "description": "Standard finansowy."
+        },
+        {
+          "id": "crypto",
+          "label": "Wysoka precyzja (8 miejsc)",
+          "description": "Wymagane tylko jeśli symulujemy pojedyncze transakcje na małych kwotach BTC."
+        }
+      ],
+      "recommendation": {
+        "optionId": "integers",
+        "reason": "W modelach wizualnych grosze psują czytelność wykresów i tabeli."
+      },
+      "userResponse": {
+        "selected": [
+          "standard"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q16_currency",
+      "text": "Jaką walutę bazową powinien obsługiwać model?",
+      "description": "Wpływa na symbole widoczne na dashboardzie i ewentualne przeliczniki.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "usd",
+          "label": "USD (Dolar amerykański)",
+          "description": "Standard światowy dla krypto i inwestycji."
+        },
+        {
+          "id": "pln",
+          "label": "PLN (Złoty polski)",
+          "description": "Dobre dla lokalnego planowania kosztów (biuro, ludzie)."
+        },
+        {
+          "id": "eur",
+          "label": "EUR (Euro)",
+          "description": "Uniwersalne dla rynku europejskiego."
+        }
+      ],
+      "recommendation": {
+        "optionId": "usd",
+        "reason": "Większość giełd i inwestorów krypto operuje na parytetach do Dolara."
+      },
+      "userResponse": {
+        "selected": [
+          "usd"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q16b_trading_costs",
+      "text": "Jak model powinien szacować koszty transakcyjne (Giełda & Slippage)?",
+      "description": "Zamiast liczyć koszt każdej transakcji, przyjmiemy uśredniony narzut na miesięczny obrót.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "bps_fixed",
+          "label": "Stały narzut w Punktach Bazowych (bps)",
+          "description": "Np. 5-7 bps od całego wolumenu transakcyjnego jako koszt prowizji i poślizgu cenowego."
+        },
+        {
+          "id": "tier_based",
+          "label": "Tiers Giełdowe (Model VIP)",
+          "description": "Koszty spadają automatycznie wraz ze wzrostem wolumenu w portfelu."
+        }
+      ],
+      "recommendation": {
+        "optionId": "bps_fixed",
+        "reason": "Dla modelu biznesowego stały, konserwatywny narzut jest bezpieczniejszy i łatwiejszy do zweryfikowania."
+      },
+      "userResponse": {
+        "selected": [
+          "bps_fixed"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q17_initial_aum",
+      "text": "Jaki jest łączny początkowy kapitał KLIENTÓW (Initial Client AUM)?",
+      "description": "Kwota, którą bot zaczyna zarządzać w miesiącu 0.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "small",
+          "label": "$100k - $500k (Model garażowy)",
+          "description": "Testujemy model na małej skali, skupiającą się na rentowności bota."
+        },
+        {
+          "id": "medium",
+          "label": "$1M - $5M (Start z inwestorem)",
+          "description": "Optymalny poziom dla pokazania realnego biznesu i pokrycia kosztów zespołu."
+        },
+        {
+          "id": "large",
+          "label": "$10M+ (Model korporacyjny)",
+          "description": "Skalowanie na szeroką skalę z dużym budżetem marketingowym."
+        }
+      ],
+      "recommendation": {
+        "optionId": "medium",
+        "reason": "Przy $1M efekty Success Fee stają się wystarczające, by pokryć koszty AI i infrastruktury."
+      },
+      "userResponse": {
+        "selected": [
+          "small"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q18_fee_rates",
+      "text": "Jakie poziomy prowizji chcesz przyjąć jako domyślne?",
+      "description": "Główne parametry przychodowe modelu.",
+      "type": "multi_choice",
+      "options": [
+        {
+          "id": "performance_20",
+          "label": "Success Fee: 20% (Standard rynkowy)",
+          "description": "Najbardziej akceptowalna przez klientów opłata od wypracowanego zysku."
+        },
+        {
+          "id": "management_2",
+          "label": "Management Fee: 2% w skali roku",
+          "description": "Stała opłata za zarządzanie kapitałem, pobierana niezależnie od zysku."
+        },
+        {
+          "id": "performance_higher",
+          "label": "Agresywne Success Fee (np. 30-40%)",
+          "description": "Stosowane przy unikalnych algorytmach o bardzo wysokiej stopie zwrotu."
+        }
+      ],
+      "recommendation": {
+        "optionId": "performance_20",
+        "reason": "Zgodnie z modelem HWM, 20% success fee to solidny fundament finansowy."
+      },
+      "userResponse": {
+        "selected": [
+          "performance_higher"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q19_churn_model",
+      "text": "Jak model powinien symulować odpływ kapitału (Churn Rate)?",
+      "description": "Procent kapitału, który co miesiąc jest wypłacany lub zabierany przez klientów odchodzących z platformy.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "low",
+          "label": "Niski (1-2% miesięcznie)",
+          "description": "Wysoka retencja, stabilny wzrost."
+        },
+        {
+          "id": "medium",
+          "label": "Umiarkowany (5% miesięcznie)",
+          "description": "Uwzględniamy realizację zysków przez klientów."
+        },
+        {
+          "id": "dynamic",
+          "label": "Zależny od wyników bota (Drawdown Churn)",
+          "description": "Zaawansowane: klienci odchodzą szybciej, gdy bot notuje straty."
+        }
+      ],
+      "recommendation": {
+        "optionId": "medium",
+        "reason": "Bezpieczne założenie uwzględniające, że ludzie wypłacają zyski na konsumpcję."
+      },
+      "userResponse": {
+        "selected": [
+          "medium"
+        ],
+        "customText": "",
+        "comment": "Chce żeby ten parametr był łatwo modyfikowalny jakimś przesuwakiem lub tym podobnym"
+      }
+    },
+    {
+      "id": "q19b_capacity_cap",
+      "text": "Czy model powinien symulować spadek rentowności (Alpha Decay) przy wzroście AUM?",
+      "description": "W HFT płynność rynku jest ograniczona. Powyżej pewnej kwoty (np. $50M) strategia zaczyna mieć zbyt duży wpływ na rynek i jej zyskowność % spada.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "hard_cap",
+          "label": "Hard Cap (Stały limit kapitału)",
+          "description": "Model przestaje przyjmować nowe środki powyżej np. $20M."
+        },
+        {
+          "id": "linear_decay",
+          "label": "Liniowy spadek Yield wraz ze wzrostem AUM",
+          "description": "Im więcej zarządzamy, tym mniejszy procent zysku wypracowujemy."
+        },
+        {
+          "id": "infinite",
+          "label": "Pomiń (Nieskończona płynność)",
+          "description": "Zakładamy, że rynek jest tak głęboki, że nasza skala nigdy nie wpłynie na zysk."
+        }
+      ],
+      "recommendation": {
+        "optionId": "linear_decay",
+        "reason": "Realistyczne podejście buduje zaufanie zawodowych inwestorów."
+      },
+      "userResponse": {
+        "selected": [
+          "infinite"
+        ],
+        "customText": "",
+        "comment": "Na pierwsze dwa lata nie ma sensu zakładać że osiągniemy taki kapitał który realnie będzie wpływał na rynek. Tym bardziej że nie handlujemy na jednej walucie."
+      }
+    },
+    {
+      "id": "q20_cac_efficiency",
+      "text": "Jak definiujemy efektywność marketingu?",
+      "description": "Stosunek wydanych pieniędzy na reklamę do pozyskanego kapitału (AUM).",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "linear",
+          "label": "Stały koszt pozyskania (np. $1 spend = $50 AUM)",
+          "description": "Uproszczony model liniowego wzrostu."
+        },
+        {
+          "id": "diminishing",
+          "label": "Spadek efektywności przy dużych skalach",
+          "description": "Realistyczne: z czasem pozyskanie kolejnego miliona USD jest droższe."
+        }
+      ],
+      "recommendation": {
+        "optionId": "linear",
+        "reason": "Na etapie MVP modelu liniowa zależność jest wystarczająca i łatwiejsza do zrozumienia dla inwestora."
+      },
+      "userResponse": {
+        "selected": [
+          "linear"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q16c_leverage_logic",
+      "text": "Jak model powinien uwzględniać dźwignię finansową (Leverage) wybraną przez klientów?",
+      "description": "Wyniki historyczne są 1x (bez dźwigni). Dźwignia mnoży zysk, ale i ryzyko drawdownu.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "avg_leverage_slider",
+          "label": "Średnia Dźwignia (Globalny Suwak)",
+          "description": "Użytkownik ustawia np. 3x i cały kapitał bota pracuje z takim mnożnikiem."
+        },
+        {
+          "id": "leveraged_tiers",
+          "label": "Profile Agresywności (Tiers)",
+          "description": "Dzielimy klientów na grupy: Konserwatywni (1x), Umiarkowani (3x), Agresywni (5x). Model wylicza ważoną średnią."
+        },
+        {
+          "id": "dynamic_leverage",
+          "label": "Dźwignia dynamiczna (Volatility Based)",
+          "description": "System sam dobiera lewar tak, aby utrzymać stały poziom ryzyka (np. 1% straty na transakcję)."
+        }
+      ],
+      "recommendation": {
+        "optionId": "avg_leverage_slider",
+        "reason": "Najprostszy i najczytelniejszy sposób na pokazanie 'co by było gdyby' w modelu finansowym."
+      },
+      "userResponse": {
+        "selected": [
+          "avg_leverage_slider"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q20b_client_growth",
+      "text": "W jakim tempie powinna rosnąć baza klientów?",
+      "description": "Pozwala oszacować tempo przyrostu AUM niezależnie od wyniku tradingu.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "fixed_monthly",
+          "label": "Stała ilość nowych klientów (np. +10 os/mies)",
+          "description": "Model liniowy, prosty do przewidzenia."
+        },
+        {
+          "id": "viral_growth",
+          "label": "Wzrost wykładniczy (Viral Coefficient)",
+          "description": "Każdy klient poleca bota kolejnym. Szybka skala w późniejszym etapie."
+        },
+        {
+          "id": "marketing_driven",
+          "label": "Wzrost napędzany budżetem (Ad-Spend)",
+          "description": "Ilość klientów zależy bezpośrednio od kwoty wpompowanej w reklamę."
+        }
+      ],
+      "recommendation": {
+        "optionId": "marketing_driven",
+        "reason": "Dla profesjonalnego startu, wzrost oparty na budżecie marketingowym jest najbardziej mierzalny."
+      },
+      "userResponse": {
+        "selected": [
+          "marketing_driven"
+        ],
+        "customText": "",
+        "comment": "Możemy zrobić wzrost klientów uzależniony od budżetu reklamowego ale chce mieć możliwość ustawiania jaki kapitał idzie na reklamę oraz jak ten kapitał będzie rósł. Trzeba obmyśleć jak to rozwiązać ponieważ na początku koszty mogą przewyższać przychody a kapitał reklamowy jakiś musi być więc nie możemy po prostu ustalić go jako procentową wartość dochodów. Liczę na twoje sugestie."
+      }
+    },
+    {
+      "id": "q20c_capital_injection",
+      "text": "Jak często i w jakiej skali klienci będą dopłacać kapitał?",
+      "description": "Symulacja 'Retention Upsell' – zadowoleni klienci dorzucają środki.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "no_injections",
+          "label": "Brak dopłat (Tylko reinvest zysku)",
+          "description": "Kapitał rośnie tylko dzięki tradingowi i nowym klientom."
+        },
+        {
+          "id": "periodic_injection",
+          "label": "Regularne dopłaty (np. co kwartał +20%)",
+          "description": "Symulujemy oszczędnościowe podejście klientów."
+        },
+        {
+          "id": "profit_driven_injection",
+          "label": "Dopłaty po udanych miesiącach",
+          "description": "Ludzie dopłacają więcej, gdy widzą zielone słupki na wykresie."
+        }
+      ],
+      "recommendation": {
+        "optionId": "periodic_injection",
+        "reason": "Tworzy bardziej stabilny i optymistyczny wykres wzrostu AUM."
+      },
+      "userResponse": {
+        "selected": [
+          "periodic_injection"
+        ],
+        "customText": "",
+        "comment": "Chce żeby tą wartość dało się regulować. Jak dużo i jak często."
+      }
+    },
+    {
+      "id": "q_universal_budget",
+      "text": "Jaki jest przewidywany budżet na rozwój platformy MVP?",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "low",
+          "label": "Niski ($5k - $15k)"
+        },
+        {
+          "id": "mid",
+          "label": "Średni ($20k - $50k)"
+        },
+        {
+          "id": "high",
+          "label": "Wysoki ($100k+)"
+        }
+      ],
+      "userResponse": {
+        "selected": [],
+        "customText": "Cały MVP ma zostać zrobiony przez agenta AI więc zakładam że zrobi to w cenie poniżej 100$",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q_universal_timeline",
+      "text": "Jaki jest docelowy czas na wdrożenie działającego symulatora?",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "speed",
+          "label": "ASAP (1 miesiąc)"
+        },
+        {
+          "id": "quality",
+          "label": "Standard (2-3 miesiące)"
+        }
+      ],
+      "userResponse": {
+        "selected": [],
+        "customText": "Tydzień. Dla agenta to i tak bardzo dużo ale wiem że potrzeba nadzoru człowieka.",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q_universal_scale",
+      "text": "Jaka jest zakładana liczba użytkowników końcowych (inwestorów) w roku 1?",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "early",
+          "label": "Do 100 (Zamknięty krąg)"
+        },
+        {
+          "id": "growth",
+          "label": "500 - 2000 (Dynamiczny start)"
+        },
+        {
+          "id": "mass",
+          "label": "5000+ (Globalny zasięg)"
+        }
+      ],
+      "userResponse": {
+        "selected": [
+          "early"
+        ],
+        "customText": "Chce żeby ta wartość była regulowana",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q_initial_client_count",
+      "text": "Ilu klientów posiada system w momencie startu (Miesiąc 0)?",
+      "type": "number",
+      "description": "Liczba kont/portfeli, które są aktywne od pierwszego dnia.",
+      "options": [],
+      "userResponse": {
+        "selected": [],
+        "customText": "5",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q_initial_runway",
+      "text": "Jaki jest początkowy kapitał operacyjny SPÓŁKI (Company Runway)?",
+      "type": "number",
+      "description": "Środki własne/inwestorskie przeznaczone na pokrycie kosztów stałych i marketingu przed osiągnięciem rentowności.",
+      "options": [],
+      "userResponse": {
+        "selected": [],
+        "customText": "70000 zł",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q_parameter_checklist",
+      "text": "Które parametry modelu finansowego mają być regulowane przez użytkownika (suwaki/inputy)?",
+      "description": "Zaznacz wszystkie wartości, które chcesz zmieniać dynamicznie w symulatorze. Niezaznaczone parametry zostaną przyjęte jako stałe (hardcoded) w PRD.",
+      "type": "multi_choice",
+      "options": [
+        {
+          "id": "initial_client_aum",
+          "label": "Początkowy kapitał KLIENTÓW (AUM)"
+        },
+        {
+          "id": "initial_runway",
+          "label": "Kapitał operacyjny SPÓŁKI (Runway)"
+        },
+        {
+          "id": "initial_client_count",
+          "label": "Początkowa liczba klientów"
+        },
+        {
+          "id": "avg_deposit",
+          "label": "Średnia wpłata na klienta"
+        },
+        {
+          "id": "success_fee",
+          "label": "Prowizja Success Fee (%)"
+        },
+        {
+          "id": "management_fee",
+          "label": "Opłata Management Fee (%)"
+        },
+        {
+          "id": "referral_fee_share",
+          "label": "% zysku oddawany polecającemu"
+        },
+        {
+          "id": "referral_client_ratio",
+          "label": "% klientów pochodzących z polecenia"
+        },
+        {
+          "id": "churn_base",
+          "label": "Base Churn Rate (%)"
+        },
+        {
+          "id": "churn_panic",
+          "label": "Panic Multiplier (x)"
+        },
+        {
+          "id": "leverage_avg",
+          "label": "Średnia dźwignia (Leverage)"
+        },
+        {
+          "id": "marketing_budget_start",
+          "label": "Budżet marketingowy ($/mc)"
+        },
+        {
+          "id": "marketing_reinvest",
+          "label": "% przychodu na marketing"
+        },
+        {
+          "id": "reserve_rate",
+          "label": "Fundusz rezerwowy (%)"
+        }
+      ],
+      "recommendation": {
+        "optionId": "all",
+        "reason": "Zapewnienie pełnej interaktywności modelu biznesowego pozwala na testowanie różnych wariantów 'what-if'."
+      },
+      "userResponse": {
+        "selected": [
+          "initial_client_aum",
+          "initial_runway",
+          "initial_client_count",
+          "avg_deposit",
+          "success_fee",
+          "churn_rate",
+          "leverage",
+          "panic_churn",
+          "marketing_fixed",
+          "marketing_revenue_perc",
+          "injection_params",
+          "reserve_fund",
+          "yield_seed",
+          "management_fee",
+          "referral_fee_share",
+          "referral_client_ratio",
+          "marketing_budget_start",
+          "marketing_reinvest",
+          "reserve_rate",
+          "leverage_avg",
+          "churn_panic",
+          "churn_base"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q_referral_logic",
+      "text": "Jak ma działać system poleceń (Affiliate)?",
+      "type": "single_choice",
+      "description": "System poleceń to kluczowy element obniżający koszt pozyskania klienta (CAC).",
+      "options": [
+        {
+          "id": "rev_share",
+          "label": "Revenue Share (np. oddajemy 3% z naszych 20% Success Fee)"
+        },
+        {
+          "id": "fixed_bounty",
+          "label": "Stała nagroda za klienta"
+        }
+      ],
+      "recommendation": {
+        "optionId": "rev_share",
+        "reason": "Revenue Share motywuje polecających do dbania o jakość kapitału i długoterminową współpracę."
+      },
+      "userResponse": {
+        "selected": [
+          "rev_share"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    }
+  ]
+}

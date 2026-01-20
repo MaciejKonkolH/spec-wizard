@@ -1,0 +1,139 @@
+{
+  "id": 1,
+  "name": "Faza 1: Discovery (Badanie Koncepcji)",
+  "status": "completed",
+  "contextSummary": "Zakończono etap Discovery. Cel: Pozyskanie inwestora.",
+  "questions": [
+    {
+      "id": "q1_goal",
+      "text": "Jaki jest główny cel modelu finansowego?",
+      "description": "Zdefiniowanie celu pozwoli na dobór odpowiedniej precyzji i sposobu prezentacji danych.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "1",
+          "label": "Pozyskanie inwestora (efekt WOW i symulacja ROI)",
+          "description": "Model skupiony na dynamice wzrostu, wizualizacji skali i zwrocie z inwestycji (Return on Investment)."
+        },
+        {
+          "id": "2",
+          "label": "Zarządzanie operacyjne (kontrola kosztów i płynności)",
+          "description": "Model precyzyjnie liczący wydatki bieżące, cashflow i momenty koniecznego dofinansowania."
+        },
+        {
+          "id": "3",
+          "label": "Optymalizacja strategii (jak parametry bota wpływają na zysk firmy)",
+          "description": "Model techniczny pozwalający testować różne poziomy fee i ich wpływ na finalny wynik finansowy."
+        }
+      ],
+      "recommendation": {
+        "optionId": "1",
+        "reason": "Zgodnie z obecnym etapem projektu, kluczowe jest przekonanie inwestorów do skali biznesu."
+      },
+      "userResponse": {
+        "selected": [
+          "1"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q2_horizon",
+      "text": "Jaki horyzont czasowy powinna obejmować standardowa symulacja?",
+      "description": "Okres czasu, dla którego będziemy generować wykresy i tabele finansowe.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "1",
+          "label": "12 miesięcy (krótka perspektywa, wysoka dokładność)",
+          "description": "Najwyższa przewidywalność, ale rzadko pokazuje efekt skali (compound interest)."
+        },
+        {
+          "id": "2",
+          "label": "24 miesiące (standard dla startupów)",
+          "description": "Złoty środek między wizją a realistycznym planowaniem."
+        },
+        {
+          "id": "3",
+          "label": "60 miesięcy (długoterminowa wizja skalowania)",
+          "description": "Czysto spekulatywna symulacja long-term, pokazuje potęgę wykładniczego wzrostu."
+        }
+      ],
+      "recommendation": {
+        "optionId": "2",
+        "reason": "Inwestorzy zazwyczaj chcą widzieć drogę do break-even i skalowania w perspektywie 2 lat."
+      },
+      "userResponse": {
+        "selected": [
+          "2"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q3_complexity",
+      "text": "Jak bardzo szczegółowy ma być model kosztów?",
+      "description": "Decyduje o tym, czy koszty są jedną liczbą, czy rozbijamy je na czynniki pierwsze.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "1",
+          "label": "Uproszczony (tylko główne grupy: Chmura, AI, Ludzie)",
+          "description": "Szybki w konfiguracji, dobry do ogólnych założeń."
+        },
+        {
+          "id": "2",
+          "label": "Szczegółowy (podział na konkretne instancje GPU, licencje API, podatki, biuro)",
+          "description": "Pozwala na bardzo precyzyjne planowanie budżetu operacyjnego."
+        },
+        {
+          "id": "3",
+          "label": "Dynamiczny (koszty rosnące liniowo wraz z liczbą klientów)",
+          "description": "Koszty chmury i API rosną automatycznie wraz z wielkością bazy klientów."
+        }
+      ],
+      "recommendation": {
+        "optionId": "3",
+        "reason": "Model musi pokazywać, jak koszty skalują się wraz z sukcesem handlowym (AUM)."
+      },
+      "userResponse": {
+        "selected": [
+          "2"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q4_hwm_sim",
+      "text": "Czy model powinien symulować negatywne scenariusze rynkowe (drawdowny) i ich wpływ na High-Water Mark?",
+      "description": "High-Water Mark (HWM) to najwyższy stan kapitału, powyżej którego pobieramy opłatę od zysku. Drawdown to spadek kapitału.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "1",
+          "label": "Tak (model musi pokazać okresy braku przychodów)",
+          "description": "Jeśli bot straci, firma nie zarabia fee dopóki nie odrobi straty ponad poprzedni szczyt (HWM)."
+        },
+        {
+          "id": "2",
+          "label": "Nie (zakładamy stały, optymistyczny wzrost)",
+          "description": "Uproszczenie, które może zostać odebrane przez inwestora jako zbyt optymistyczne."
+        }
+      ],
+      "recommendation": {
+        "optionId": "1",
+        "reason": "To kluczowe dla wiarygodności przed inwestorem – pokazuje, że rozumiesz ryzyko tradingu."
+      },
+      "userResponse": {
+        "selected": [
+          "1"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,309 @@
+{
+  "id": 2,
+  "name": "Faza 2: Produkt, Funkcje & UX",
+  "status": "completed",
+  "contextSummary": "Zdefiniowano funkcje produktu i UX.",
+  "questions": [
+    {
+      "id": "q5_features",
+      "text": "Jakie interaktywne funkcje powinny znaleźć się w panelu symulacji?",
+      "description": "Funkcjonalności dashboardu, które pozwalają na głębszą analizę danych i interakcję z modelem.",
+      "type": "multi_choice",
+      "options": [
+        {
+          "id": "sliders",
+          "label": "Suwaki parametrów (zmiana 'w locie' yield'u, churnu, kosztów)",
+          "description": "Umożliwiają natychmiastową zmianę kluczowych zmiennych i obserwację wyników na wykresach."
+        },
+        {
+          "id": "scenarios",
+          "label": "System scenariuszy (zapisywanie i porównywanie Bull/Bear/Base)",
+          "description": "Pozwala porównać scenariusz optymistyczny (Bull), pesymistyczny (Bear) i bazowy side-by-side."
+        },
+        {
+          "id": "pdf_export",
+          "label": "Eksport podsumowania do PDF (gotowy raport dla inwestora)",
+          "description": "Generuje profesjonalny dokument z aktualną symulacją, gotowy do wysłania e-mailem lub prezentacji."
+        },
+        {
+          "id": "monte_carlo",
+          "label": "Analiza probabilistyczna (zakresy prawdopodobieństwa zysku)",
+          "description": "Metoda statystyczna (Monte Carlo) pokazująca setki możliwych ścieżek zysku i ryzyko drawdownu."
+        },
+        {
+          "id": "cost_deepdive",
+          "label": "Panel edycji kosztów (dodawanie/usuwanie konkretnych pozycji budżetowych)",
+          "description": "Możliwość precyzyjnego wpisania pensji, kosztów najmu czy opłat za API zamiast ogólnych kwot."
+        }
+      ],
+      "recommendation": {
+        "optionId": "sliders",
+        "reason": "Interaktywność to największa przewaga nad Excelem, pozwala 'poczuć' dynamikę biznesu."
+      },
+      "userResponse": {
+        "selected": [
+          "sliders",
+          "cost_deepdive",
+          "scenarios"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q6_kpis",
+      "text": "Które wskaźniki (KPI) powinny być najbardziej widoczne na dashboardzie?",
+      "description": "KPI (Key Performance Indicators) to kluczowe mierniki sukcesu, które inwestor chce widzieć jako pierwsze.",
+      "type": "multi_choice",
+      "options": [
+        {
+          "id": "net_profit",
+          "label": "Miesięczny Zysk Netto (po kosztach i podatkach)",
+          "description": "Realna kwota, która zostaje w firmie 'na czysto' każdego miesiąca po opłaceniu wszystkiego."
+        },
+        {
+          "id": "aum_growth",
+          "label": "Dynamika wzrostu AUM (Assets Under Management)",
+          "description": "Całkowita wartość kapitału zarządzanego. Od tego zależy nasze Success Fee."
+        },
+        {
+          "id": "bep_time",
+          "label": "Czas do osiągnięcia Break-Even Point",
+          "description": "Moment (miesiąc), w którym skumulowane zyski pokrywają wszystkie nakłady inwestycyjne."
+        },
+        {
+          "id": "clv_cac",
+          "label": "Relacja CLV do CAC (opłacalność pozyskania klienta)",
+          "description": "Ile zarobimy na kliencie (Lifetime Value) w stosunku do kosztu jego pozyskania (Acquisition Cost)."
+        },
+        {
+          "id": "hwm_status",
+          "label": "Aktualny stan HWM i rezerwa na Drawdown",
+          "description": "Informacja o tym, ile bot musi 'odrobić' strat rynkowych przed pobraniem kolejnej prowizji."
+        }
+      ],
+      "recommendation": {
+        "optionId": "net_profit",
+        "reason": "Inwestorów najbardziej interesuje 'bottom line' oraz szybkość zwrotu (BEP)."
+      },
+      "userResponse": {
+        "selected": [
+          "net_profit",
+          "aum_growth",
+          "bep_time",
+          "hwm_status",
+          "clv_cac"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q7_sampling",
+      "text": "Z jaką częstotliwością model powinien przeliczać kapitał i koszty?",
+      "description": "Określa 'gęstość' danych na wykresach. Więcej punktów to ładniejsze wykresy, ale większy szum informacyjny.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "monthly",
+          "label": "Miesięcznie (najbardziej czytelne dla finansów)",
+          "description": "Standard w raportowaniu biznesowym. Wygładza dobowe wahania giełdy."
+        },
+        {
+          "id": "weekly",
+          "label": "Tygodniowo (lepsze dla dynamiki HWM)",
+          "description": "Pozwala szybciej reagować na trendy rynkowe w symulacji."
+        },
+        {
+          "id": "daily_noisy",
+          "label": "Dziennie z szumem (najbardziej realistyczne wizualnie wykresy)",
+          "description": "Symuluje codzienne zmiany salda, co nadaje modelowi charakteru 'real-time trading'."
+        }
+      ],
+      "recommendation": {
+        "optionId": "monthly",
+        "reason": "Standardowe raporty finansowe są miesięczne, co ułatwia porównanie z innymi projektami."
+      },
+      "userResponse": {
+        "selected": [
+          "monthly"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q8_market_data",
+      "text": "Skąd model powinien brać parametry zmienności rynkowej (do testów HWM)?",
+      "description": "Sposób, w jaki symulator generuje spadki i wzrosty kapitału.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "fixed_input",
+          "label": "Ręczny suwak % drawdown (uproszczone)",
+          "description": "Użytkownik sam decyduje, jak głęboki będzie spadek w danym scenariuszu."
+        },
+        {
+          "id": "historical_presets",
+          "label": "Presety historyczne (np. 'Scenariusz FTX 2022', 'Bull Run 2021')",
+          "description": "Używamy realnych ruchów BTC/ETH z przeszłości, aby przetestować odporność strategii."
+        },
+        {
+          "id": "random_gaussian",
+          "label": "Generator losowy (szum Gaussa z zadanym odchyleniem)",
+          "description": "Zaawansowana matematycznie symulacja nieprzewidywalności rynku."
+        }
+      ],
+      "recommendation": {
+        "optionId": "historical_presets",
+        "reason": "Presety historyczne mają dużą wagę narracyjną przed inwestorem ('Nasz model przeżyłby krach FTX')."
+      },
+      "userResponse": {
+        "selected": [
+          "fixed_input"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q9_layout",
+      "text": "Jaki układ interfejsu preferujesz dla dashboardu?",
+      "description": "Sposób rozmieszczenia paneli sterowania (suwaków) względem wyników (wykresów).",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "split_sidebar",
+          "label": "Panel sterowania z lewej, wykresy z prawej (klasyczny SaaS)",
+          "description": "Bardzo czytelne, pozwala na manipulowanie parametrami przy stałym podglądzie wykresów."
+        },
+        {
+          "id": "top_controls",
+          "label": "Parametry na górze (poziomo), wyniki pod spodem",
+          "description": "Daje więcej miejsca na szerokie, panoramiczne wykresy wzrostu kapitału."
+        },
+        {
+          "id": "tabs",
+          "label": "Podział na zakładki (Konfiguracja / Symulacja / Raport)",
+          "description": "Dobre dla bardzo rozbudowanych modeli kosztów, ale tracimy natychmiastowy feedback."
+        }
+      ],
+      "recommendation": {
+        "optionId": "split_sidebar",
+        "reason": "Przy interaktywnym modelu 'split screen' najlepiej oddaje dynamikę zmian."
+      },
+      "userResponse": {
+        "selected": [
+          "split_sidebar"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q10_chart_types",
+      "text": "Ktöre typy wizualizacji są kluczowe dla Twojej prezentacji?",
+      "description": "Wybór sposobu prezentowania danych liczbowych na ekranie.",
+      "type": "multi_choice",
+      "options": [
+        {
+          "id": "area_cumulative",
+          "label": "Pole powierzchni (Cumulative Growth) dla AUM",
+          "description": "Pokazuje narastający kapitał, idealnie wizualizuje 'potęgę procentu składanego'."
+        },
+        {
+          "id": "bar_monthly",
+          "label": "Słupki dla miesięcznych przychodów i kosztów",
+          "description": "Pozwala łatwo porównać rentowność (płynność) w każdym miesiącu oddzielnie."
+        },
+        {
+          "id": "waterfall",
+          "label": "Wykres kaskadowy (Waterfall) dla marży",
+          "description": "Pokazuje jak od przychodu brutto odejmowane są kolejne koszty, aż do zysku netto."
+        },
+        {
+          "id": "status_cards",
+          "label": "Duże karty numerów (Big Numbers) dla KPI",
+          "description": "Wypunktowanie najważniejszych liczb (np. ROI, BEP) w górnej części ekranu."
+        }
+      ],
+      "recommendation": {
+        "optionId": "area_cumulative",
+        "reason": "Dla inwestora najważniejsza jest wizualizacja 'góry złota', czyli skumulowanego AUM."
+      },
+      "userResponse": {
+        "selected": [
+          "area_cumulative",
+          "bar_monthly",
+          "waterfall",
+          "status_cards"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q11_interaction_flow",
+      "text": "Jak model ma reagować na zmianę parametrów?",
+      "description": "Decyduje o poczuciu 'życia' aplikacji.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "realtime",
+          "label": "Auto-reobliczanie w czasie rzeczywistym (Live Update)",
+          "description": "Wykresy 'pływają' podczas przesuwania suwaków. Maksymalny efekt WOW."
+        },
+        {
+          "id": "manual",
+          "label": "Przycisk 'Przelicz symulację' (Manual Calc)",
+          "description": "Wymagane, gdy obliczenia są bardzo złożone (np. ciężkie Monte Carlo)."
+        }
+      ],
+      "recommendation": {
+        "optionId": "realtime",
+        "reason": "W modelu JS/HTML przy 24 miesiącach realtime będzie działał błyskawicznie i zrobi wrażenie."
+      },
+      "userResponse": {
+        "selected": [
+          "realtime"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q12_scenarios_viz",
+      "text": "Jak chcesz porównywać scenariusze (Bull/Bear/Base)?",
+      "description": "Sposób prezentacji różnic między założeniami rynkowymi.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "overlay",
+          "label": "Nałożenie na jeden wykres (różne kolory linii)",
+          "description": "Najlepsze do pokazania rozpiętości wyników i marginesu bezpieczeństwa."
+        },
+        {
+          "id": "toggle",
+          "label": "Przełącznik scenariusza (widzisz tylko jeden na raz)",
+          "description": "Czytelniejsze, ale trudniej porównać konkretne różnice w zysku."
+        },
+        {
+          "id": "summary_table",
+          "label": "Tabela porównawcza parametrów końcowych",
+          "description": "Suche zestawienie liczb na końcu strony (np. Zysk Bull: 1M, Zysk Bear: 0.2M)."
+        }
+      ],
+      "recommendation": {
+        "optionId": "overlay",
+        "reason": "Wykres liniowy z trzema ścieżkami (wachlarz) to standard w profesjonalnych modelach finansowych."
+      },
+      "userResponse": {
+        "selected": [
+          "overlay"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    }
+  ]
+}

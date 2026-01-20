@@ -46,6 +46,11 @@
                 </svg>
                 AI Spec Wizard
             </div>
+            <div class="project-selector">
+                <select id="projectSelect" class="select-modern">
+                    <option value="">(Loading projects...)</option>
+                </select>
+            </div>
             <div class="actions">
                 <button id="saveBtn" class="btn primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -57,13 +62,14 @@
                     <span data-i18n="save">Save Changes</span>
                 </button>
                 <button id="generateBtn" class="btn magic">
+                    <div class="spinner"></div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path
-                            d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z">
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
                         </path>
                     </svg>
-                    <span data-i18n="generate">Generate Next Phase</span>
+                    <span class="btn-text-gen" data-i18n="generate">Generate Next Phase</span>
                 </button>
                 <div class="divider"></div>
                 <button id="configBtn" class="icon-only-btn" title="Settings">
@@ -81,21 +87,51 @@
         </header>
 
         <main id="scroll-container">
-            <div class="container">
-                <div id="project-header">
-                    <h1 id="project-name">Loading...</h1>
-                    <p id="project-desc">...</p>
+            <div class="container main-layout">
+                <div class="content-area">
+                    <div id="project-header">
+                        <h1 id="project-name">Loading...</h1>
+                        <p id="project-desc">...</p>
+                    </div>
+
+                    <!-- Tabs for Modules -->
+                    <div id="modules-nav" class="tabs">
+                        <!-- Injected via JS -->
+                    </div>
+
+                    <!-- Module Info (Description) -->
+                    <div id="module-info"></div>
+
+                    <!-- Secondary Tabs for Phases -->
+                    <div id="phases-nav" class="sub-tabs">
+                        <!-- Injected via JS -->
+                    </div>
+
+                    <!-- Content Area -->
+                    <div id="module-content" class="content-panel">
+                        <!-- Injected via JS -->
+                    </div>
                 </div>
 
-                <!-- Tabs for Modules -->
-                <div id="modules-nav" class="tabs">
-                    <!-- Injected via JS -->
-                </div>
-
-                <!-- Content Area -->
-                <div id="module-content" class="content-panel">
-                    <!-- Injected via JS -->
-                </div>
+                <!-- Sidebar for Context -->
+                <aside id="context-sidebar" class="context-panel">
+                    <div class="context-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                        <span data-i18n="project_context">Project Context</span>
+                    </div>
+                    <div id="global-context" class="context-section">
+                        <h4>Project</h4>
+                        <div class="context-text" id="global-context-text">...</div>
+                    </div>
+                    <div id="module-context-display" class="context-section">
+                        <h4>Module</h4>
+                        <div class="context-text" id="module-context-text">...</div>
+                    </div>
+                </aside>
             </div>
 
             <!-- Toast/Status-bar floating or integrated? User said REMOVE footer. -->
@@ -125,8 +161,15 @@
             <div class="form-group api-only hidden">
                 <label data-i18n="settings_provider">API Provider:</label>
                 <select id="apiProviderSelect">
-                    <option value="openai">OpenAI</option>
+                    <option value="openai">OpenAI (GPT-4)</option>
+                    <option value="gemini">Google Gemini (Flash/Pro)</option>
                     <option value="anthropic">Anthropic (Claude)</option>
+                </select>
+            </div>
+            <div class="form-group api-only hidden">
+                <label>Model Name:</label>
+                <select id="apiModelSelect">
+                    <option value="">(Loading models...)</option>
                 </select>
             </div>
             <div class="form-group api-only hidden">
@@ -141,7 +184,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=12"></script>
 </body>
 
 </html>

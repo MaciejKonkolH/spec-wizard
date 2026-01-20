@@ -7,8 +7,6 @@ venv/
 
 # Spec Wizard Data
 *.bak
-config.json
-spec_data.json
 
 # IDEs
 .vscode/

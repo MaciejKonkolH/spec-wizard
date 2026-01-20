@@ -1,0 +1,276 @@
+{
+  "id": 5,
+  "name": "Faza 5: Architektura & Dostarczenie Dokumentacji",
+  "status": "completed",
+  "contextSummary": "Ustalono architekturę techniczną i stack technologiczny.",
+  "questions": [
+    {
+      "id": "q21_tech_stack",
+      "text": "W jakiej technologii powinien zostać zbudowany silnik symulatora?",
+      "description": "Determinuje wydajność oraz łatwość osadzenia modelu na stronie internetowej.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "vanilla_js",
+          "label": "Vanilla JavaScript (Lekkość i szybkość)",
+          "description": "Brak zależności, maksymalna szybkość ładowania, idealny do prostych dashboardów."
+        },
+        {
+          "id": "react_charts",
+          "label": "React + Chart.js / Recharts (Standard nowoczesny)",
+          "description": "Łatwa rozbudowa o zaawansowane komponenty UI i reaktywne wykresy."
+        },
+        {
+          "id": "python_wasm",
+          "label": "Python (PyScript/Pyodide) w przeglądarce",
+          "description": "Pozwala użyć bibliotek typu Pandas/NumPy bezpośrednio w przeglądarce bez serwera."
+        }
+      ],
+      "recommendation": {
+        "optionId": "react_charts",
+        "reason": "Ekosystem Reacta oferuje najlepsze biblioteki do wizualizacji danych finansowych."
+      },
+      "userResponse": {
+        "selected": [
+          "react_charts"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q22_data_flow",
+      "text": "Jak silnik powinien zarządzać stanem parametrów (suwaków)?",
+      "description": "Architektura przepływu danych przy zmianach użytkownika.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "central_store",
+          "label": "Centralny stan (Redux/Context API)",
+          "description": "Wszystkie parametry w jednym miejscu, zmiana jednego odświeża cały model."
+        },
+        {
+          "id": "event_driven",
+          "label": "Model sterowany zdarzeniami (Event-based)",
+          "description": "Każdy suwak wysyła sygnał tylko do zainteresowanych części (np. tylko do osi kosztów)."
+        },
+        {
+          "id": "local_storage",
+          "label": "Auto-save w LocalStorage",
+          "description": "Symulator zapamiętuje ustawienia suwaków nawet po odświeżeniu strony przez użytkownika."
+        }
+      ],
+      "recommendation": {
+        "optionId": "central_store",
+        "reason": "Dla modelu finansowego spójność wszystkich danych w jednym momencie jest krytyczna."
+      },
+      "userResponse": {
+        "selected": [
+          "central_store"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q23_component_library",
+      "text": "Jakie komponenty UI będą potrzebne do obsługi suwaków?",
+      "description": "Wybór estetyki i funkcjonalności elementów sterujących.",
+      "type": "multi_choice",
+      "options": [
+        {
+          "id": "dual_range",
+          "label": "Suwaki z wyborem zakresu (Min/Max)",
+          "description": "Pozwalają symulować niepewność (np. zysk między 5% a 15%)."
+        },
+        {
+          "id": "input_sync",
+          "label": "Suwaki sparowane z polem liczbowym",
+          "description": "Można przesuwać suwak LUB wpisać dokładną wartość z klawiatury."
+        },
+        {
+          "id": "presets_btns",
+          "label": "Przyciski 'Szybkich Ustawień' (np. 'Reset do domyślnych')",
+          "description": "Pozwala natychmiast wrócić do bezpiecznych założeń."
+        }
+      ],
+      "recommendation": {
+        "optionId": "input_sync",
+        "reason": "Precyzja ma znaczenie w finansach – użytkownik czasem chce wpisać dokładnie 20.5%."
+      },
+      "userResponse": {
+        "selected": [
+          "input_sync",
+          "dual_range"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q24_worker_calc",
+      "text": "Gdzie powinny odbywać się obliczenia symulacji?",
+      "description": "Wpływa na płynność (framerate) interfejsu przy dużej ilości punktów danych.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "main_thread",
+          "label": "Główny wątek (proste i szybkie)",
+          "description": "Wystarczające dla 24-miesięcznych modeli, bardzo łatwe w implementacji."
+        },
+        {
+          "id": "web_worker",
+          "label": "Web Worker (obliczenia w tle)",
+          "description": "Niezbędne przy symulacjach Monte Carlo, aby nie zamrażać animacji wykresów."
+        }
+      ],
+      "recommendation": {
+        "optionId": "main_thread",
+        "reason": "Dla obecnej skali danych JavaScript na głównym wątku poradzi sobie bez opóźnień."
+      },
+      "userResponse": {
+        "selected": [
+          "main_thread"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q25_persistence",
+      "text": "Gdzie powinny być zapisywane wyniki symulacji?",
+      "description": "Decyduje o tym, czy użytkownik może wrócić do swojej sesji później.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "browser_only",
+          "label": "Tylko przeglądarka (LocalStorage)",
+          "description": "Brak serwera, dane zostają na komputerze użytkownika. Prywatność 100%."
+        },
+        {
+          "id": "cloud_db",
+          "label": "Baza danych w chmurze (Firebase/Supabase)",
+          "description": "Pozwala na logowanie i dostęp do swoich symulacji z dowolnego urządzenia."
+        },
+        {
+          "id": "sharelink",
+          "label": "Unikalny link (Serializacja do URL)",
+          "description": "Cały stan symulacji jest zakodowany w linku, który można wysłać mailem bez logowania."
+        }
+      ],
+      "recommendation": {
+        "optionId": "sharelink",
+        "reason": "Dla modelu prezentacyjnego, możliwość wysłania gotowego scenariusza linkiem to potężne narzędzie."
+      },
+      "userResponse": {
+        "selected": [
+          "sharelink"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q26_reporting_quality",
+      "text": "Jaki poziom szczegółowości powinien mieć raport PDF?",
+      "description": "Eksport danych do formatu dokumentu.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "one_pager",
+          "label": "Podsumowanie (One-Pager)",
+          "description": "Jedna strona z najważniejszymi KPI i głównym wykresem wzrostu AUM."
+        },
+        {
+          "id": "full_audit",
+          "label": "Pełny audyt (kilka stron)",
+          "description": "Rozbicie na czynniki pierwsze: koszty kadr, infrastruktury, symulacja HWM miesiąc po miesiącu."
+        },
+        {
+          "id": "spreadsheet",
+          "label": "Eksport do Excel (CSV/XLSX)",
+          "description": "Dla analityków, którzy chcą sprawdzić Twoje formuły w swoim arkuszu."
+        }
+      ],
+      "recommendation": {
+        "optionId": "one_pager",
+        "reason": "Inwestorzy cenią konkret. One-pager z kluczowymi liczbami to najlepszy wstęp do rozmowy."
+      },
+      "userResponse": {
+        "selected": [
+          "full_audit"
+        ],
+        "customText": "",
+        "comment": ""
+      }
+    },
+    {
+      "id": "q27_hft_aggregation",
+      "text": "W jaki sposób silnik powinien generować wyniki handlowe (Yield) na osi czasu?",
+      "description": "Skoro masz 5 miesięcy realnych danych (w tym jeden drawdown), możemy je wykorzystać jako fundament. Wyniki muszą być powtarzalne (deterministyczne) po odświeżeniu strony.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "historical_bootstrap",
+          "label": "Model ‘Historical Blocks’ (Bootstrap)",
+          "description": "Twoje 5 miesięcy to ‘kafle’. Model układa je w pętlę na 24-36 miesięcy. Wynik jest stały, dopóki nie zmienisz kolejności kafli."
+        },
+        {
+          "id": "deterministic_scenarios",
+          "label": "Model ‘Fixed Scenarios’ (Archetypy)",
+          "description": "Zdefiniujemy 3 stałe ścieżki (Konserwatywna, Bazowa, Optymistyczna) oparte na średniej i drawdownie z Twoich 5 miesięcy. Zero losowości przy ładowaniu."
+        },
+        {
+          "id": "seeded_monte_carlo",
+          "label": "Model ‘Seeded Monte Carlo’",
+          "description": "Model losuje wyniki na podstawie Twojej statystyki, ale używa stałego ziarna (Seed). Dzięki temu przy każdym otwarciu wykres wygląda identycznie."
+        }
+      ],
+      "recommendation": {
+        "optionId": "historical_bootstrap",
+        "reason": "Użycie realnych danych historycznych (nawet z krótkiego okresu) jest najbardziej przekonujące dla inwestora."
+      },
+      "userResponse": {
+        "selected": [
+          "deterministic_scenarios"
+        ],
+        "customText": "",
+        "comment": "Nie chciałbym takiej sytuacji że przy kazdym otwarciu symulacji otrzymujemy wynik. Więc losowość może być ale generowana jakoś jednorazowo. Przemyśl jeszcze raz to pytania i zaproponuj coś co uwzględni moją sugestię. Obecnie  mam wyniki symulacji z okresu mniej więcej 5 miesięcy i jest tam jeden miesiąc dropdown. Więc nie wiem czy jakoś wykorzystać te 5 miesięcy i w jakiś sposób je ekstrapolować czy może uśrednić zysk z całości i dodać jakąś losowość. Proszę o jakieś sensowne propozycje z dobrym objaśnieniem"
+      }
+    },
+    {
+      "id": "q28_spec_delivery",
+      "text": "W jakiej formie ma zostać wygenerowana finalna specyfikacja techniczna?",
+      "description": "Zwieńczenie pracy ze Spec Wizardem.",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": "markdown_ai",
+          "label": "Markdown Strukturany (zoptymalizowany pod AI)",
+          "description": "Plik .md z wyraźną hierarchią i tabelami dla agentów kochających kod."
+        },
+        {
+          "id": "yaml_spec",
+          "label": "Struktura YAML / JSON",
+          "description": "Czyste dane techniczne."
+        },
+        {
+          "id": "combined_prd",
+          "label": "Pełny PRD (Markdown + Diagramy Mermaid)",
+          "description": "Kompletna specyfikacja z wizualizacją logiki."
+        }
+      ],
+      "recommendation": {
+        "optionId": "pr_template",
+        "reason": "Profesjonalny PRD to fundament pod budowę aplikacji i wycenę prac IT."
+      },
+      "userResponse": {
+        "selected": [
+          "markdown_ai"
+        ],
+        "customText": "",
+        "comment": "PRD w formie pliku md, yaml lub tym podobnego łatwego do odczytu przez agentów AI"
+      }
+    }
+  ]
+}

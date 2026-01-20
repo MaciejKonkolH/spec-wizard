@@ -5,9 +5,9 @@ Na podstawie "Analizy Projektu" przygotowano plan działań mający na celu prze
 ## Faza 1: Stabilizacja (Hardening)
 **Cel**: Eliminacja błędów krytycznych i zabezpieczenie danych przed utratą.
 
-1.  **Implementacja Auto-Backup w `server.py`**:
-    *   Przed każdym zapisem `spec_data.json` utwórz kopię `spec_data.json.bak` (lub rotację z timestampem).
-    *   Chroni przed utratą danych w przypadku błędu zapisu/sieci.
+1.  **Implementacja Auto-Backup w `server.py`** [DONE]:
+    *   Przed każdym zapisem `spec_data.json` tworzona jest kopia z timestampem.
+    *   Chroni przed utratą danych i pozwala na przywrócenie dowolnej wersji historycznej.
 2.  **Walidacja JSON (Schema Check)**:
     *   Serwer nie powinien pozwolić na zapisanie pliku, jeśli nie jest poprawnym JSON-em.
     *   Dodatkowo: Sprawdzenie kluczowych pól (czy istnieje `modules`, `phases`).
@@ -52,8 +52,8 @@ Na podstawie "Analizy Projektu" przygotowano plan działań mający na celu prze
 ## Harmonogram Wdrożenia
 
 ### Tydzień 1 (Priorytet: Stabilność)
-- [ ] Auto-Backup w `server.py`
-- [ ] Walidacja JSON przy zapisie
+- [x] Auto-Backup w `server.py` (z timestampami)
+- [ ] Walidacja JSON przy zapisie (rozszerzona strukturalna)
 - [ ] Poprawa Instrukcji (Context Summary - definicja)
 
 ### Tydzień 2 (Priorytet: Kontekst & Logika)

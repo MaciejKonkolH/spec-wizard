@@ -1,0 +1,566 @@
+{
+  "projectInfo": {
+    "name": "PremiereRadar",
+    "description": "System generujący informacje na własne potrzeby użytkownika.",
+    "version": "1.0",
+    "contextSummary": "The project 'PremiereRadar' is designed for a small group of friends to track movie and series premieres. It will be a Web RWD application, fetching data from TMDB API. Users will have individual accounts, but the 'watched' status for a movie/series will be global across all users. Content can be added via in-app search or by pasting links. Daily email notifications about upcoming premieres will be sent. The main UI will be a chronological timeline list of premieres, with movie cards showing Title, Date, and Poster, and basic filtering (Movies vs Series). The application will be hosted on a VPS, performing daily updates from TMDB. The technical stack will utilize Python for the backend and SQLite as the database. This specification is now complete and ready for final approval."
+  },
+  "modules": [
+    {
+      "id": "global",
+      "name": "Discovery & Goals",
+      "contextSummary": "All previous phases are completed, detailing the project's vision, functional requirements, user experience, non-functional aspects, and technical architecture. The 'PremiereRadar' system, aimed at a small group of friends, will be a Web RWD application using TMDB API. It features individual user accounts with a global 'watched' status for content, allows adding titles via search or links, and sends daily email notifications. The user interface will present premieres in a timeline list with standard movie card details and basic filtering. The backend will be developed in Python, using SQLite, and hosted on a VPS with daily data updates. The project is now entering Faza 6 for final review and sign-off.",
+      "phases": [
+        {
+          "id": 1,
+          "name": "Faza Discovery",
+          "status": "completed",
+          "contextSummary": "Zakończona. Wybory: Web RWD, TMDB API, Nazwa: PremiereRadar.",
+          "questions": [
+            {
+              "id": "project_name_final",
+              "text": "Jaka jest oficjalna nazwa projektu?",
+              "type": "single_line",
+              "options": [
+                {
+                  "id": "opt_1",
+                  "label": "PremiereRadar"
+                },
+                {
+                  "id": "opt_2",
+                  "label": "CinePulse"
+                },
+                {
+                  "id": "opt_3",
+                  "label": "SeriesStalker"
+                }
+              ],
+              "recommendation": {
+                "optionId": "opt_1",
+                "reason": "Nazwa 'PremiereRadar' dobrze oddaje główną funkcję śledzenia dat premier."
+              },
+              "userResponse": {
+                "selected": [
+                  "opt_1"
+                ],
+                "customText": "Nie mam pomysłu na nazwę możesz zaproponować jakiś swój na podstawie opisu.",
+                "comment": ""
+              }
+            },
+            {
+              "id": "primary_goal",
+              "text": "Jaki jest główny cel tej aplikacji? (Co ma rozwiązywać?)",
+              "type": "multi_line",
+              "options": [],
+              "userResponse": {
+                "selected": [],
+                "customText": "Chce stworzyć serwis który będzie wyświetlać informacje  filmach i serialach. Najważniejsza funkcjonalność to wyświetlanie listy filmów i seriali których premiery są najbliżej. W przypadku serialów najbardziej istotna jest data premiery ostatniego odcinka ostatniego sezonu. Informacje o filmach i serialach mają być pobierane z serwisu filmweb lub jakieś inne źródło jeśli znasz lepsze. Chciałbym móc dodawać tytuły filmów i seriali przez podawanie linków to konkretnych tytułów tak jak tutaj https://www.filmweb.pl/serial/Fundacja-2021-856226",
+                "comment": ""
+              }
+            },
+            {
+              "id": "target_audience",
+              "text": "Kto jest głównym użytkownikiem końcowym?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "b2b",
+                  "label": "Biznes (B2B)"
+                },
+                {
+                  "id": "b2c",
+                  "label": "Użytkownik indywidualny (B2C)"
+                },
+                {
+                  "id": "internal",
+                  "label": "Pracownicy wewnętrzni"
+                }
+              ],
+              "userResponse": {
+                "selected": [],
+                "customText": "Kilku moich znajomych pasjonatów.",
+                "comment": ""
+              }
+            },
+            {
+              "id": "platform_preference",
+              "text": "Na jakich urządzeniach Ty i Twoi znajomi planujecie głównie korzystać z aplikacji?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "web_rwd",
+                  "label": "Przeglądarka (Web RWD) - Działa na telefonie i komputerze"
+                },
+                {
+                  "id": "mobile_native",
+                  "label": "Aplikacja Mobilna (Android/iOS)"
+                },
+                {
+                  "id": "desktop_native",
+                  "label": "Aplikacja Desktopowa (Windows/Mac)"
+                }
+              ],
+              "recommendation": {
+                "optionId": "web_rwd",
+                "reason": "Dla małej grupy i szybkiego startu, RWD (Responsive Web Design) jest najbardziej efektywne."
+              },
+              "userResponse": {
+                "selected": [
+                  "web_rwd"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "data_source_strategy",
+              "text": "Wspominasz o Filmwebie. Scrapowanie (pobieranie danych bez API) jest ryzykowne i może być blokowane. Czy rozważamy oficjalne API (np. TMDB) jako główne źródło?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "tmdb_api",
+                  "label": "TMDB (Oficjalne API - Stabilne/Zalecane)"
+                },
+                {
+                  "id": "filmweb_scraping",
+                  "label": "Filmweb (Scraping - Ryzykowne/Niestabilne)"
+                },
+                {
+                  "id": "hybrid",
+                  "label": "Hybryda (TMDB jako baza + Filmweb jako uzupełnienie)"
+                }
+              ],
+              "recommendation": {
+                "optionId": "tmdb_api",
+                "reason": "The Movie Database (TMDB) oferuje świetne, darmowe API. Scrapowanie Filmwebu to ciągła walka z zabezpieczeniami."
+              },
+              "userResponse": {
+                "selected": [
+                  "tmdb_api"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Faza 2: Wymagania Funkcjonalne",
+          "status": "completed",
+          "contextSummary": "Zakończona. Model: Konta indywidualne + Wspólna baza. Dodawanie: Search + Linki. Powiadomienia: Discord (zmiana na WhatsApp w F3).",
+          "questions": [
+            {
+              "id": "auth_model",
+              "text": "Jak chcecie zarządzać dostępem? (Czy każdy ma swoje konto?)",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "individual_accounts",
+                  "label": "Indywidualne Konta (Każdy ma swoją listę 'Do obejrzenia')"
+                },
+                {
+                  "id": "shared_access",
+                  "label": "Wspólne Konto/Lista (Wszyscy widzą i edytują to samo)"
+                },
+                {
+                  "id": "no_auth",
+                  "label": "Brak logowania (Dostęp otwarty w sieci lokalnej/VPN)"
+                }
+              ],
+              "recommendation": {
+                "optionId": "individual_accounts",
+                "reason": "Indywidualne konta pozwalają na oznaczanie 'Obejrzane' niezależnie od innych."
+              },
+              "userResponse": {
+                "selected": [
+                  "individual_accounts"
+                ],
+                "customText": "Indywidualne konta ale wspólna lista do obejrzenia",
+                "comment": ""
+              }
+            },
+            {
+              "id": "content_adding_method",
+              "text": "W jaki sposób chcecie dodawać nowe filmy/seriale do śledzenia?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "search_in_app",
+                  "label": "Wyszukiwarka wewnątrz aplikacji (Wpisuję tytuł -> TMDB zwraca wyniki)"
+                },
+                {
+                  "id": "link_paste",
+                  "label": "Wklejanie linków (np. z IMDB/TMDB)"
+                },
+                {
+                  "id": "both",
+                  "label": "Obie metody"
+                }
+              ],
+              "recommendation": {
+                "optionId": "search_in_app",
+                "reason": "Najwygodniejsze rozwiązanie. API TMDB ma świetną wyszukiwarkę."
+              },
+              "userResponse": {
+                "selected": [
+                  "both"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "notifications_channel",
+              "text": "Jak chcecie otrzymywać powiadomienia o premierach?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "email_digest",
+                  "label": "E-mail (np. podsumowanie tygodniowe)"
+                },
+                {
+                  "id": "discord_webhook",
+                  "label": "Discord / Telegram (Wiadomość na komunikator)"
+                },
+                {
+                  "id": "none_check_manually",
+                  "label": "Brak powiadomień (Będę wchodził na stronę, by sprawdzić)"
+                }
+              ],
+              "recommendation": {
+                "optionId": "discord_webhook",
+                "reason": "Dla grupy znajomych-pasjonatów, kanał na Discordzie sprawdza się najlepiej."
+              },
+              "userResponse": {
+                "selected": [
+                  "discord_webhook"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Faza 3: Szczegóły Interfejsu i Interakcji (UX Deep Dive)",
+          "status": "completed",
+          "contextSummary": "Zakończona. Wybory: Dashboard=Timeline, Karty=Standard (Plakat+Data), Filtr=Podstawowy (Filmy/Seriale).",
+          "questions": [
+            {
+              "id": "dashboard_layout",
+              "text": "Jak ma wyglądać główny widok (Dashboard) dla użytkownika?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "calendar_view",
+                  "label": "Kalendarz Premier (Widok miesiąca z zaznaczonymi datami)"
+                },
+                {
+                  "id": "timeline_list",
+                  "label": "Lista Chronologiczna (Najbliższe 30 dni w formie prostej listy)"
+                },
+                {
+                  "id": "kanban_board",
+                  "label": "Kanban (Kolumny: Dziś / W tym tygodniu / Wkrótce)"
+                }
+              ],
+              "recommendation": {
+                "optionId": "timeline_list",
+                "reason": "Najbardziej czytelny widok dla listy premier. Łatwy do przeskanowania wzrokiem."
+              },
+              "userResponse": {
+                "selected": [
+                  "timeline_list"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "movie_card_details",
+              "text": "Co powinno znajdować się na karcie filmu na liście, aby nie zagracać widoku?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "minimal_info",
+                  "label": "Minimal (Tylko Tytuł + Data Premiery)"
+                },
+                {
+                  "id": "standard_info",
+                  "label": "Standard (Tytuł + Data + Plakat)"
+                },
+                {
+                  "id": "rich_info",
+                  "label": "Rich (Tytuł + Data + Plakat + Ocena IMDB + Gatunki)"
+                }
+              ],
+              "recommendation": {
+                "optionId": "standard_info",
+                "reason": "Plakat bardzo ułatwia szybkie rozpoznanie tytułu, a data jest kluczowa."
+              },
+              "userResponse": {
+                "selected": [
+                  "standard_info"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "list_filtering",
+              "text": "Czy i jak chcecie filtrować listę nadchodzących premier?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "no_filters",
+                  "label": "Brak (Tylko sortowanie po dacie)"
+                },
+                {
+                  "id": "basic_type",
+                  "label": "Podstawowe (Tylko przełącznik Filmy vs Seriale)"
+                },
+                {
+                  "id": "advanced_filters",
+                  "label": "Zaawansowane (Gatunek, Ocena minimalna, Platforma streamingowa)"
+                }
+              ],
+              "recommendation": {
+                "optionId": "basic_type",
+                "reason": "Rozdział Filmów od Seriali to najczęstszy przypadek użycia."
+              },
+              "userResponse": {
+                "selected": [
+                  "basic_type"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Faza 4: Wymagania Niefunkcjonalne i Logika",
+          "status": "completed",
+          "contextSummary": "Zakończona. Global Status, VPS, Daily Updates. Powiadomienia E-mail.",
+          "questions": [
+            {
+              "id": "shared_list_logic",
+              "text": "Skoro lista filmów jest WSPÓLNA, a konta INDYWIDUALNE, to co się dzieje, gdy Ty oznaczysz film jako 'Obejrzany'?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "independent_status",
+                  "label": "Niezależne Statusy: U mnie jest 'Obejrzany', ale u znajomych nadal 'Do obejrzenia' (Zalecane)"
+                },
+                {
+                  "id": "global_status",
+                  "label": "Globalny Status: Film znika z listy 'Do obejrzenia' u wszystkich"
+                }
+              ],
+              "recommendation": {
+                "optionId": "independent_status",
+                "reason": "Pozwala każdemu śledzić własny postęp. Film znika z globalnej listy dopiero, gdy wszyscy go obejrzą (lub zostanie zarchiwizowany ręcznie)."
+              },
+              "userResponse": {
+                "selected": [
+                  "global_status"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "hosting_environment",
+              "text": "Aplikacja musi działać w tle, aby wysyłać powiadomienia na Discorda. Gdzie planujesz ją uruchomić?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "local_pc",
+                  "label": "Mój Komputer (Będzie działać tylko, gdy mam włączony PC)"
+                },
+                {
+                  "id": "vps_cloud",
+                  "label": "Serwer VPS / Chmura (np. DigitalOcean/Heroku) - Koszt ok. 5$/msc, ale działa 24/7"
+                },
+                {
+                  "id": "home_server",
+                  "label": "Domowy Serwer / Raspberry Pi / NAS (Działa 24/7 u mnie w domu)"
+                }
+              ],
+              "recommendation": {
+                "optionId": "vps_cloud",
+                "reason": "Najbardziej niezawodne dla powiadomień. Alternatywnie Raspberry Pi, jeśli posiadasz."
+              },
+              "userResponse": {
+                "selected": [
+                  "vps_cloud"
+                ],
+                "customText": "Powiadomienia nalepiej żeby były na whatsUp",
+                "comment": ""
+              }
+            },
+            {
+              "id": "update_frequency",
+              "text": "Jak często system ma sprawdzać w TMDB, czy pojawiły się nowe daty premier/odcinki?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "daily_check",
+                  "label": "Raz dziennie (np. codziennie rano) - Wystarczające dla premier"
+                },
+                {
+                  "id": "hourly_check",
+                  "label": "Co godzinę - Bardziej agresywne, może zużywać limity API"
+                },
+                {
+                  "id": "manual_check",
+                  "label": "Tylko ręcznie (Na kliknięcie przycisku 'Odśwież')"
+                }
+              ],
+              "recommendation": {
+                "optionId": "daily_check",
+                "reason": "Daty premier nie zmieniają się tak często. Raz dziennie to optymalny balans."
+              },
+              "userResponse": {
+                "selected": [
+                  "daily_check"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Faza 5: Architektura i Stack Technologiczny",
+          "status": "completed",
+          "contextSummary": "Zakończona. Stack: Python + SQLite. Email Notifications.",
+          "questions": [
+            {
+              "id": "notification_tech_choice",
+              "text": "⚠️ WhatsApp nie posiada prostego, darmowego API dla botów. Co robimy?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "telegram_switch",
+                  "label": "Przejście na Telegram (Darmowe API)"
+                },
+                {
+                  "id": "discord_stick",
+                  "label": "Pozostanie przy Discordzie (Faza 2)"
+                },
+                {
+                  "id": "email_digest_opt",
+                  "label": "E-mail (SMTP) - Uniwersalna metoda"
+                }
+              ],
+              "recommendation": {
+                "optionId": "telegram_switch",
+                "reason": "Telegram lub Email to najtańsze alternatywy."
+              },
+              "userResponse": {
+                "selected": [
+                  "email_digest_opt"
+                ],
+                "customText": "W takim razie powiadomienia na maila",
+                "comment": ""
+              }
+            },
+            {
+              "id": "database_engine",
+              "text": "Ponieważ wybraliśmy 'Globalny Status', potrzebujemy bazy danych wspierającej transakcje. Co wybieramy?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "sqlite",
+                  "label": "SQLite (Jeden plik .db) - Idealne do małych projektów"
+                },
+                {
+                  "id": "postgresql",
+                  "label": "PostgreSQL (Pełny serwer bazy danych)"
+                }
+              ],
+              "recommendation": {
+                "optionId": "sqlite",
+                "reason": "Przy założonym ruchu (kilku znajomych), SQLite jest absolutnie wystarczające."
+              },
+              "userResponse": {
+                "selected": [
+                  "sqlite"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            },
+            {
+              "id": "backend_language",
+              "text": "W jakim języku napiszemy logikę serwera (Backend)?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "python",
+                  "label": "Python (Django/FastAPI)"
+                },
+                {
+                  "id": "nodejs",
+                  "label": "Node.js (Express/NestJS)"
+                },
+                {
+                  "id": "go",
+                  "label": "Go (Golang)"
+                }
+              ],
+              "recommendation": {
+                "optionId": "python",
+                "reason": "Ekosystem Pythona najlepiej nadaje się do integracji z TMDB."
+              },
+              "userResponse": {
+                "selected": [
+                  "python"
+                ],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "name": "Faza 6: Finalizacja i Zatwierdzenie",
+          "status": "active",
+          "contextSummary": "Faza finalizacji. Podsumowanie kluczowych decyzji technicznych i biznesowych przed zatwierdzeniem specyfikacji.",
+          "questions": [
+            {
+              "id": "final_signoff",
+              "text": "Przejrzano wszystkie aspekty projektu PremiereRadar. Czy jesteś gotowy, aby zatwierdzić poniższą specyfikację i uznać ją za gotową do implementacji?\n\n**Podsumowanie Specyfikacji PremiereRadar:**\n- **Cel Biznesowy:** Śledzenie premier filmów i seriali dla małej grupy znajomych.\n- **Platforma:** Aplikacja Web (RWD) dostępna przez przeglądarkę.\n- **Źródło Danych:** The Movie Database (TMDB) API.\n- **Zarządzanie Użytkownikami:** Indywidualne konta z globalnym statusem 'obejrzane' dla treści (jeśli jeden użytkownik oznaczy, jest to globalne dla wszystkich).\n- **Dodawanie Treści:** Możliwość dodawania przez wyszukiwanie w aplikacji oraz wklejanie linków.\n- **Powiadomienia:** Codzienne powiadomienia e-mail o nadchodzących premierach.\n- **Interfejs Użytkownika:** Główny widok to chronologiczna lista premier (timeline) z kartami zawierającymi tytuł, datę i plakat. Podstawowe filtrowanie (filmy vs seriale).\n- **Architektura Techniczna:** Backend w Pythonie, baza danych SQLite, hosting na VPS.\n- **Aktualizacje Danych:** Raz dziennie synchronizacja z TMDB.\n\nCzy powyższa specyfikacja spełnia Twoje oczekiwania i jest gotowa do dalszych prac?",
+              "type": "single_choice",
+              "options": [
+                {
+                  "id": "approve",
+                  "label": "Tak, zatwierdzam specyfikację. Możemy rozpoczynać implementację."
+                },
+                {
+                  "id": "revisions",
+                  "label": "Nie, mam uwagi lub potrzebuję zmian. Wracam do poprzednich faz."
+                }
+              ],
+              "recommendation": {
+                "optionId": "approve",
+                "reason": "Wszystkie kluczowe decyzje zostały podjęte, a potencjalne konflikty rozwiązane."
+              },
+              "userResponse": {
+                "selected": [],
+                "customText": "",
+                "comment": ""
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
